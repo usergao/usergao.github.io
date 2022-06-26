@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>golang运算基础 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="一元运算符&amp;:取地址运算符，表示取一个变量的内存地址，同时也属于一元操作符(也叫单目运算符)。 * :取值运算符，表示取一个变量所指向内存地址中保存的数据，它同时也属于一元操作符(也叫单目运算符)。 如何区分”&amp;”, “*”到底是逻辑运算符（乘法算术符）还是取地址运算符（取值运算符）？如果需要两个变量来进行操作，则是逻辑运算符，比如 a &amp; b 和 a * b，同时需要两个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang运算基础">
+<meta property="og:url" content="http://example.com/2022/05/31/golang%E5%9F%BA%E7%A1%80%E7%9A%84%E5%89%AF%E6%9C%AC/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一元运算符&amp;:取地址运算符，表示取一个变量的内存地址，同时也属于一元操作符(也叫单目运算符)。 * :取值运算符，表示取一个变量所指向内存地址中保存的数据，它同时也属于一元操作符(也叫单目运算符)。 如何区分”&amp;”, “*”到底是逻辑运算符（乘法算术符）还是取地址运算符（取值运算符）？如果需要两个变量来进行操作，则是逻辑运算符，比如 a &amp; b 和 a * b，同时需要两个">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-05-31T06:23:00.000Z">
+<meta property="article:modified_time" content="2022-06-20T21:45:54.526Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="GOLANG">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-golang基础的副本" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/31/golang%E5%9F%BA%E7%A1%80%E7%9A%84%E5%89%AF%E6%9C%AC/" class="article-date">
+  <time class="dt-published" datetime="2022-05-31T06:23:00.000Z" itemprop="datePublished">2022-05-31</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/GOLANG/">GOLANG</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      golang运算基础
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="一元运算符"><a href="#一元运算符" class="headerlink" title="一元运算符"></a>一元运算符</h2><p>&amp;:<br>取地址运算符，表示取一个变量的内存地址，同时也属于一元操作符(也叫单目运算符)。</p>
+<p>* :<br>取值运算符，表示取一个变量所指向内存地址中保存的数据，它同时也属于一元操作符(也叫单目运算符)。</p>
+<h3 id="如何区分”-amp-”-“-”到底是逻辑运算符（乘法算术符）还是取地址运算符（取值运算符）？"><a href="#如何区分”-amp-”-“-”到底是逻辑运算符（乘法算术符）还是取地址运算符（取值运算符）？" class="headerlink" title="如何区分”&amp;”, “*”到底是逻辑运算符（乘法算术符）还是取地址运算符（取值运算符）？"></a>如何区分”&amp;”, “*”到底是逻辑运算符（乘法算术符）还是取地址运算符（取值运算符）？</h3><p>如果需要两个变量来进行操作，则是逻辑运算符，比如 a &amp; b 和 a * b，同时需要两个变量，称之为二元运算符，而取地址（取值）运算符只需要一个变量既可，比如 &amp;a 和 *b ，称之为一元运算符。</p>
+<h2 id="进制"><a href="#进制" class="headerlink" title="进制"></a>进制</h2><ul>
+<li>前缀是0x或0X为十六进制</li>
+<li>前缀为0的为8进制</li>
+<li>十进制无前缀</li>
+</ul>
+<p>整数可以有一个后缀，是u和l的组合，分别代表 unsigned 和 long ，后缀可以是大小写字母，顺序也随意。</p>
+<h2 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h2><p>&amp;：</p>
+<p>按位与操作，将两个值转化为二进制后进行对比，两位均为1时为1，位数不够时用0从左补充，再将获得的二进制值转化为十进制。</p>
+<p>|：</p>
+<p>按位或操作，将两个值转化为二进制后进行对比，两位有1位为1时为1，位数不够时用0从左补充，再将获得的二进制值转化为十进制。</p>
+<p>^：</p>
+<p>按位异或操作，将两个值转化为二进制后进行对比，两位不一样时为1，其它都为0，位数不够时用0从左补充，再将获得的二进制值转化为十进制。</p>
+<p>&lt;&lt;：</p>
+<p>按位左移操作，左移n位等于乘以2的n次方。</p>
+<p>&gt;&gt;：</p>
+<p>按位右移操作，右移n位等于除以2的n次方。</p>
+<p>&amp;^：</p>
+<p>按位清除操作，比如5&amp;^11，指5转化为二进制时为0101，11为1011。将5的二进制值中为1的值设置为0，剩余位与11的二进制值相应位相同，则得到0100，十进制为4。</p>
+<p>^x：</p>
+<p>取反操作，公式可以为-（x+1），适用于正负数和零。</p>
+<h2 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h2><p>每个 const 定义的默认为0，除非显式设置为其他值，后续常量默认值为上一个常量值。如果常量值为 iota ，则都被设置为 iota，iota 有递增效果，所以可以实现枚举。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const (</span><br><span class="line">	a = iota</span><br><span class="line">	b</span><br><span class="line">	c</span><br><span class="line">	d, e, f = iota, iota, iota</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/31/golang%E5%9F%BA%E7%A1%80%E7%9A%84%E5%89%AF%E6%9C%AC/" data-id="cl4v3jgai0004acs6hh2581do" data-title="golang运算基础" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GOLANG/" rel="tag">GOLANG</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/05/31/golang%E5%8C%85%E7%9A%84%E5%89%AF%E6%9C%AC/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          golang包
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/05/31/golang%E5%A4%8D%E5%90%88%E6%95%B0%E6%8D%AE%E7%9A%84%E5%89%AF%E6%9C%AC/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">golang复合数据</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/GOLANG/">GOLANG</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/GOLANG/" rel="tag">GOLANG</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/GOLANG/" style="font-size: 10px;">GOLANG</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/05/31/golang%E5%87%BD%E6%95%B0%E7%9A%84%E5%89%AF%E6%9C%AC/">golang函数</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/31/golang%E5%8C%85%E7%9A%84%E5%89%AF%E6%9C%AC/">golang包</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/31/golang%E5%9F%BA%E7%A1%80%E7%9A%84%E5%89%AF%E6%9C%AC/">golang运算基础</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/31/golang%E5%A4%8D%E5%90%88%E6%95%B0%E6%8D%AE%E7%9A%84%E5%89%AF%E6%9C%AC/">golang复合数据</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/31/golang%E5%B9%B6%E5%8F%91%E7%9A%84%E5%89%AF%E6%9C%AC/">golang并发</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

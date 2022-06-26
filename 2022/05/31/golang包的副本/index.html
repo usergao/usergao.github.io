@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>golang包 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="包在编写代码的过程中，不同模块（包）之间为了实现某一个类似的功能可能会采用相同的名字去命名一个函数，如果一个软件开发过程中需要同时引用这两个模块（包），就会在调用函数时产生歧义。为了解决这个问题，GO语言引入了命名空间的概念，让每个包都定义一个命名空间，用于内部标识符的访问。 与大多数编译语言类似，在GO语言中，当改动了一个源文件时，就必须重新编译该文件，以及它对应的包和所有依赖该包的其它包。即使">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang包">
+<meta property="og:url" content="http://example.com/2022/05/31/golang%E5%8C%85%E7%9A%84%E5%89%AF%E6%9C%AC/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="包在编写代码的过程中，不同模块（包）之间为了实现某一个类似的功能可能会采用相同的名字去命名一个函数，如果一个软件开发过程中需要同时引用这两个模块（包），就会在调用函数时产生歧义。为了解决这个问题，GO语言引入了命名空间的概念，让每个包都定义一个命名空间，用于内部标识符的访问。 与大多数编译语言类似，在GO语言中，当改动了一个源文件时，就必须重新编译该文件，以及它对应的包和所有依赖该包的其它包。即使">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-05-31T06:23:00.000Z">
+<meta property="article:modified_time" content="2022-06-20T21:59:39.239Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="GOLANG">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-golang包的副本" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/31/golang%E5%8C%85%E7%9A%84%E5%89%AF%E6%9C%AC/" class="article-date">
+  <time class="dt-published" datetime="2022-05-31T06:23:00.000Z" itemprop="datePublished">2022-05-31</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/GOLANG/">GOLANG</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      golang包
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="包"><a href="#包" class="headerlink" title="包"></a>包</h2><p>在编写代码的过程中，不同模块（包）之间为了实现某一个类似的功能可能会采用相同的名字去命名一个函数，如果一个软件开发过程中需要同时引用这两个模块（包），就会在调用函数时产生歧义。为了解决这个问题，GO语言引入了命名空间的概念，让每个包都定义一个命名空间，用于内部标识符的访问。</p>
+<p>与大多数编译语言类似，在GO语言中，当改动了一个源文件时，就必须重新编译该文件，以及它对应的包和所有依赖该包的其它包。即使是从头构建，GO语言编译器的编译速度以明显快于绝大部分编译语言。这得益于其包设计的三个特性。</p>
+<ul>
+<li>显示声明：所有导入的包都必须在每个文件开头显示声明，这样编译器就没有必要读取和分析整个原文件来判断包的依赖关系。</li>
+<li>无环依赖：禁止宝的环状依赖，因为没有循环依赖，包的依赖关系形成一个有向无环图，每个包可以独立编译，而且很可能是被并发编译。</li>
+<li>无须遍历：编译后包的目标文件不仅记录包本身的导出信息，同时还记录了包的依赖关系。因此，在编译一个包的时候，编译器只需要读取每个直接导入包的目标文件，而不需要遍历所有依赖文件，毕竟很多都是重复的间接依赖。</li>
+</ul>
+<h6 id="包的结构"><a href="#包的结构" class="headerlink" title="包的结构"></a>包的结构</h6><p>GO编译工具对源码目录有很严格的要求，每个工作空间（workspace）必须由bin、pkg、src三个目录组成。bin目录主要存放可执行文件，pkg存放编译好的库文件，主要是*.a文件；src目录主要存放GO语言的源文件。</p>
+<blockquote>
+<p>工作空间</p>
+</blockquote>
+<p>GO语言采用了工作空间这种方式来管理本地代码，这与大部分编程语言不一样，因此解释一下GOROOT和GOPATH之间的关系。首先，GOROOT是一个全局且唯一的变量，用于指定存放GO语言本身的目录路径（安装路径）；GOPATH是一个工作空间的变量，可以有很多个（用<code>;</code>分割），用于指定工作空间的目录路径：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GOPATH=$HOME/workspace/golib:$HOME/project/go</span><br></pre></td></tr></table></figure>
+<p>通常<code>go get</code>会使用第一个工作空间保存下载的的第三方库（包），在开发时不管是哪一个工作空间下载的包都可以在任意工作空间使用。但需要使用时要注意不要将GOPATH和GOROOT设置为同一个路径</p>
+<blockquote>
+<p>包的源文件</p>
+</blockquote>
+<p>包的代码必须全部放在包中，并且源文件头都必须一致使用<code>package &lt;name&gt;</code>的语句进行声明。GO语言包可以由多个文件组成，所以文件名不需要和包名一致，包名建议使用小写字符。包名类似命名空间（namespace），与包所在目录、编译文件名无关，目录名尽量不要使用保留名称（main、all、std），对于可执行文件必须包含<code>package main</code>以及入口函数main</p>
+<p>GO语言使用名称首字母大小写来判断一个对象（全局变量。全局常量、类型、结构字段、函数、方法）的访问权限，对于包也是如此。包中成员名称首字母大小写决定了该成员的访问权限。首字母大写，可悲包外访问，即public（公开的）；首字母小写，即仅包内成员可以访问，即internal（内部的）。</p>
+<blockquote>
+<p>包的声明</p>
+</blockquote>
+<p>上面提到的每一个包内源文件都需要在开头声明所在包，这就是包的声明。包的声明对于包内而言主要用于源文件编译时能够为编译器指明哪些是包的源代码；对于包外而言，对于导入包的时候可以使用“包名.函数名”的方式使用包内函数。</p>
+<p>关于包的声明有一个例外，那就是包编译后是一个可执行程序时，会使用<code>package main</code>的方式声明main包，这时候main包本身的导入路径是无关紧要的，这个名字实际是给<code>go build</code>构建命令一个信息，这个包编译完之后必须调用连接器生成一个可执行程序。</p>
+<h6 id="包的导入"><a href="#包的导入" class="headerlink" title="包的导入"></a>包的导入</h6><p>使用包成员之前需要导入包。导入包的关键字是<code>import</code>，因为GO语言不能形成环形依赖，如果遇到导入包循环依赖的情况，GO语言的构建工具会返回错误。一般而言对于直接从分发渠道下载回来的包都不会轻易产生依赖环：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &quot;相对目录/包主文件名&quot;</span><br></pre></td></tr></table></figure>
+<p>相对目录是指从pkg&#x2F;开始的子目录，以标准库为例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import &quot;fmt&quot; // 对应/usr/local/go/pkg/linux_amd64/fmt.a</span><br><span class="line">import &quot;os/exec&quot; //对应/usr/local/go/pkg/linux_amd64/os/exec/a</span><br></pre></td></tr></table></figure>
+<p>除了一行一个包的导入方式，还可以使用一条语句导入多个包的写法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;os/exec&quot;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>导入声明</p>
+</blockquote>
+<p>当有名称相同的包导入时会有冲突，为了避免这种去哪个看，因此GO语言在导入包时可以对包名做重定向，以解决包名冲突的情况，如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import (</span><br><span class="line">    &quot;crypto/rand&quot; // 默认模式</span><br><span class="line">    mrand &quot;math/rand&quot; // 包重命名 R.Function</span><br><span class="line">    _ &quot;crypto/rand&quot; 匿名导入：仅让该包执行init函数</span><br><span class="line">    . &quot;crypto/rand&quot; 简便模式：Function</span><br><span class="line">)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<ul>
+<li>GO语言不允许包导入了但不适用，如果导入的包未使用，在编译时会被视为错误（不包含 import _）</li>
+<li>包的重命名不仅可以用于解决包名冲突，还可以解决包名过长、避免与变量或常量名称冲突的情况。</li>
+</ul>
+<p>除了使用以上的包导入方式，还有子包导入以及自定义路径导入包方式，其中对于当前目录下的子包，除使用默认完整路径导入外，还可以使用相对路径的方式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import &quot;test/test2&quot; // 一般使用这种方式导入</span><br><span class="line">import &quot;./test2&quot; // 也可以使用相对目录，但这种方式导入的包仅对GO语言有效</span><br></pre></td></tr></table></figure>
+
+<p>如果一个文件中导入的包比较多，为了管理源代码中导入的包，还可以使用空行来进行分割分组。</p>
+<blockquote>
+<p>导入路径</p>
+</blockquote>
+<p>当前GO语言的规范并没有强制包的导入路径字符串的格式，导入路径由构建工具来解释。但如果打算分享或发布自己编写的包，那么最好使用全球唯一的导入路径。<br>这主要是为了必变导入路径冲突，因此有一个约定俗成的路径格式是：所有非标准库包的导入路径以所在组织的互联网域名为前缀，这样一来就有了一个独一无二的路径，另外一方面也有利于包的检索。</p>
+<blockquote>
+<p>导入本地包</p>
+</blockquote>
+<p>安装GO语言时推荐将项目放置在GOPATH中的src目录，而项目开发时的自建包只需直接写明src目录下的相对路径既可：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &quot;src下项目目录/包所在目录&quot;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>自定义路径</p>
+</blockquote>
+<p>上面说了可以使用域名作为导入路径的前缀，对于编译器来说，只有较为流行的代码托管网站才可以使用这种路径。对于一些个人站点（比如企业自己搭建的私有GitLab仓库），为了可以更方便使用这种方式导入就需要告诉编译器这是一个包代码链接。</p>
+<p>GO语言有三种方式实现这个功能，一种是直接在包连接上加上VCS格式，目前支持的格式有：</p>
+<p>Bazaar     .bzr<br>Git        .Git<br>Mercurial  .hg<br>Subversion .svn</p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &quot;example.org/user/foo.git&quot;</span><br></pre></td></tr></table></figure>
+<p>第二种方式是针对没有版本控制符的链接，<code>go get</code>甚至不知道该如何下载代码的情况，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">example.org/repo/foo</span><br></pre></td></tr></table></figure>
+<p>这个时候就需要在网页中加入一句标签：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta name=&quot;go-import&quot; content=&quot;import-prefix vcs repo-root&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>这样就可以使用链接导入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &quot;example/pkg/foo&quot;</span><br></pre></td></tr></table></figure>
+<p>第三种是重定向网页链接，例如下面，<code>go get</code>访问链接时会被重定向到 <code>example.org/r/p/exproj</code> ：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta name=&quot;go-import&quot; content=&quot;example.org git https://example.org/r/p/exproj&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>如果没有服务器还可以使用GO语言搭建一个本地服务器：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;fmt&quot;</span><br><span class="line">	&quot;net/http&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func handler(w http.ResponseWriter, r *http.Request) &#123;</span><br><span class="line">	fmt.Fprint(w, `&lt;meta name=&quot;go-import&quot; content=&quot;example.com/zuolan/test git https://github.com/zuolan/test&quot;&gt;`)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main()  &#123;</span><br><span class="line">	http.HandleFunc(&quot;/zuolan/test&quot;, handler)</span><br><span class="line">	http.ListenAndServe(&quot;:80&quot;, nil)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>保存为<code>server.go</code>。然后编译执行，就可以实现把example.com&#x2F;zuolan&#x2F;test重定向到github.com&#x2F;zuolan&#x2F;test。</p>
+<blockquote>
+<p>匿名导入</p>
+</blockquote>
+<p>因为包引入了但没有使用会导致编译错误，但有时候只需要利用导入包产生的副作用：它会计算包级变量的初始化表达式和执行导入包的init初始化函数。这时候需要一直<code>unused import</code>编译错误，可以使用下划线来重命名导入的包。包被导入但不能被访问，这个称之为包的匿名导入，它通常用来实现一个编译时机制，然后通过main主程序入口选择性地导入附加的包。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/31/golang%E5%8C%85%E7%9A%84%E5%89%AF%E6%9C%AC/" data-id="cl4v3jgae0001acs6ce0r629c" data-title="golang包" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GOLANG/" rel="tag">GOLANG</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/05/31/golang%E5%87%BD%E6%95%B0%E7%9A%84%E5%89%AF%E6%9C%AC/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          golang函数
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/05/31/golang%E5%9F%BA%E7%A1%80%E7%9A%84%E5%89%AF%E6%9C%AC/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">golang运算基础</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/GOLANG/">GOLANG</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/GOLANG/" rel="tag">GOLANG</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/GOLANG/" style="font-size: 10px;">GOLANG</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/05/31/golang%E5%87%BD%E6%95%B0%E7%9A%84%E5%89%AF%E6%9C%AC/">golang函数</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/31/golang%E5%8C%85%E7%9A%84%E5%89%AF%E6%9C%AC/">golang包</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/31/golang%E5%9F%BA%E7%A1%80%E7%9A%84%E5%89%AF%E6%9C%AC/">golang运算基础</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/31/golang%E5%A4%8D%E5%90%88%E6%95%B0%E6%8D%AE%E7%9A%84%E5%89%AF%E6%9C%AC/">golang复合数据</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/31/golang%E5%B9%B6%E5%8F%91%E7%9A%84%E5%89%AF%E6%9C%AC/">golang并发</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

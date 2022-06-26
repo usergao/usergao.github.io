@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>golang并发 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="指定使用核心数Go运行时的调度器使用GOMAXPROCS参数来确定需要使用多少个 OS 线程来同时执行 Go 代码。默认值是机器上的 CPU 核心数。例如在一个 8 核心的机器上，GOMAXPROCS 默认为 8。Go语言中可以通过runtime.GOMAXPROCS函数设置当前程序并发时占用的 CPU逻辑核心数。（Go1.5版本之前，默认使用的是单核心执行。Go1.5 版本之后，默认使用全部的C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang并发">
+<meta property="og:url" content="http://example.com/2022/05/31/golang%E5%B9%B6%E5%8F%91%E7%9A%84%E5%89%AF%E6%9C%AC/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="指定使用核心数Go运行时的调度器使用GOMAXPROCS参数来确定需要使用多少个 OS 线程来同时执行 Go 代码。默认值是机器上的 CPU 核心数。例如在一个 8 核心的机器上，GOMAXPROCS 默认为 8。Go语言中可以通过runtime.GOMAXPROCS函数设置当前程序并发时占用的 CPU逻辑核心数。（Go1.5版本之前，默认使用的是单核心执行。Go1.5 版本之后，默认使用全部的C">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.liwenzhou.com/images/Go/concurrence/gpm.png">
+<meta property="og:image" content="https://image.jokernote.com/golang/WeChat1f7ed5064c81ec3a001f8b8eece09058.png?x-oss-process=image/resize,w_700">
+<meta property="article:published_time" content="2022-05-31T06:23:00.000Z">
+<meta property="article:modified_time" content="2022-06-20T21:48:00.156Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="GOLANG">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.liwenzhou.com/images/Go/concurrence/gpm.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-golang并发的副本" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/31/golang%E5%B9%B6%E5%8F%91%E7%9A%84%E5%89%AF%E6%9C%AC/" class="article-date">
+  <time class="dt-published" datetime="2022-05-31T06:23:00.000Z" itemprop="datePublished">2022-05-31</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/GOLANG/">GOLANG</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      golang并发
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h6 id="指定使用核心数"><a href="#指定使用核心数" class="headerlink" title="指定使用核心数"></a>指定使用核心数</h6><p>Go运行时的调度器使用GOMAXPROCS参数来确定需要使用多少个 OS 线程来同时执行 Go 代码。默认值是机器上的 CPU 核心数。例如在一个 8 核心的机器上，GOMAXPROCS 默认为 8。Go语言中可以通过runtime.GOMAXPROCS函数设置当前程序并发时占用的 CPU逻辑核心数。（Go1.5版本之前，默认使用的是单核心执行。Go1.5 版本之后，默认使用全部的CPU 逻辑核心数。）</p>
+<p>当然已提供了相应的标准库来制定核心数。使用flags包可以调整程序运行时调用CPU核心数，如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var numCors = flags.Int(&quot;n&quot;, 2, &quot;CPU核心数&quot;)</span><br><span class="line">in main()</span><br><span class="line">flag.Pars()</span><br><span class="line">runtime.GOMAXPROCS(*numCors)</span><br></pre></td></tr></table></figure>
+<p>协程可以通过调用runtime.Goexit()来停止，但是一般不这么使用。</p>
+<h5 id="协程"><a href="#协程" class="headerlink" title="协程"></a>协程</h5><p>与传统的系统级线程和进程相比，协程的最大优势在于其“轻量级”，可以轻松创建上百万个协程为不会导致系统资源衰竭，而线程和进程通常最多也不能超过10000个。这也是协程叫做轻量级线程的原因。<br>多数语言在语法层面并不直接支持协程，而是通过库的方式支持，但通过库的当时支持的功能也不完整，比如仅仅提供轻量级线程的创建、销毁与切换等能力。如果在这也的轻量级协程中调用一个同步IO操作，比如网络通信，文件读写等，都会阻塞其他的并发执行的轻量级线程，从而无法达到轻量级线程本身期望的目标。<br>GO语言在语言级别支持轻量级线程，叫goroutine。GO语言标准库提供的所有系统调用操作（包括所有同步IO操作），都会让出CPU给其他goroutine（创建协程会自动分配一个合适的CPU优先级，不管优先级如何都会与同级协程竞争CPU资源，从外部看来就是让出了部分CPU资源）。折让轻量级线程的切换管理不依赖于系统的线程和进程，也不依赖于CPU的核心数量，而是交给GO语言运行时统一调度（也允许手动控制）</p>
+<p>goroutine是GO语言并行设计的核心。goroutine说到底就是协程，但是比线程更小，十几个goroutine可能体现在底层也就是五六个线程，GO语言帮我们实现了这些goroutine之间的内存共享。执行goroutine只需要极少的栈内存（大概4~5KB），当然也会根据相应的数据伸缩，也因为如此，程序可以同时运行成千上万个并发任务。<br>goroutine是通过GO程序的runtime管理的一个线程管理器，通过go关键字实现：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">func printString(s string) &#123;</span><br><span class="line">	fmt.Println(s)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	for i := 0; i &lt; 3; i++ &#123;</span><br><span class="line">		go printString(&quot;yes&quot;)</span><br><span class="line">		//printString(&quot;no&quot;)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	for i := 0; i &lt; 3; i++ &#123;</span><br><span class="line">		go printString(&quot;no&quot;)</span><br><span class="line">	&#125;</span><br><span class="line">	time.Sleep(time.Second * 2)</span><br><span class="line">&#125;</span><br><span class="line">/*yes</span><br><span class="line">no</span><br><span class="line">yes</span><br><span class="line">no</span><br><span class="line">yes</span><br><span class="line">no*/</span><br></pre></td></tr></table></figure>
+<p>上面可以看到go关键字很方便的实现了并发编程，两个for循环虽然代码顺序不一样，但是都在同时执行各自的任务。因为main函数执行完后，goroutine还在执行各自的操作，所以CIA会有了上面的<code>time.Sleep(time.Second * 2)</code>，让差不多goroutine都差不多执行完了才结束主线程，不过这样执行代码是不优雅的，也有可能不准确，GO语言提供的<code>sync</code>包提供了一些常用的并发用语，之后会介绍<code>sync</code>包的详细内容，当前我们简单用一下<code>sync</code>包中的<code>WaitGroup</code>。当你并不关心并发操作的结果或者有其它方式收集并发操作的结果时，WaitGroup是实现等待一组并发操作完成的好方法。其次在设计上要遵循：<font color="red">不要通过共享来通信，而要通过通信来共享</font></p>
+<p>下面的示例代码中我们在 main goroutine 中使用sync.WaitGroup来等待 hello goroutine 完成后再退出。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 声明全局等待组变量</span><br><span class="line">var wg sync.WaitGroup</span><br><span class="line"></span><br><span class="line">func hello() &#123;</span><br><span class="line">	fmt.Println(&quot;hello&quot;)</span><br><span class="line">	wg.Done() // 告知当前goroutine完成</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	wg.Add(1) // 登记1个goroutine</span><br><span class="line">	go hello()</span><br><span class="line">	fmt.Println(&quot;你好&quot;)</span><br><span class="line">	wg.Wait() // 阻塞等待登记的goroutine完成</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将代码编译后再执行，这一次程序不再会有多余的停顿，hello goroutine 执行完毕后程序直接退出。</p>
+<blockquote>
+<p>启用多个goroutine</p>
+</blockquote>
+<p>这就简单的用GO语言实现了并发，我们还可以启动多个 goroutine 。让我们再来看一个新的代码示例。这里同样使用了sync.WaitGroup来实现 goroutine 的同步。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var wg sync.WaitGroup</span><br><span class="line"></span><br><span class="line">func hello(i int) &#123;</span><br><span class="line">	defer wg.Done() // goroutine结束就登记-1</span><br><span class="line">	fmt.Println(&quot;hello&quot;, i)</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">	for i := 0; i &lt; 10; i++ &#123;</span><br><span class="line">		wg.Add(1) // 启动一个goroutine就登记+1</span><br><span class="line">		go hello(i)</span><br><span class="line">	&#125;</span><br><span class="line">	wg.Wait() // 等待所有登记的goroutine都结束</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>多次执行上面的代码会发现每次终端上打印数字的顺序都不一致。这是因为10个 goroutine 是并发执行的，而 goroutine 的调度是随机的。</p>
+<p>sync.WaitGroup：计数器+delta<br>(wg *WaitGroup) Done()：计数器-1<br>(wg *WaitGroup) Wait()：阻塞直到计数器变为0</p>
+<p>sync.WaitGroup内部维护着一个计数器，计数器的值可以增加和减少。例如当我们启动了 N 个并发任务时，就将计数器值增加N。每个任务完成时通过调用 Done 方法将计数器减1。通过调用 Wait 来等待并发任务执行完，当计数器值为 0 时，表示所有并发任务已经完成。</p>
+<p><font color="red">需要注意sync.WaitGroup是一个结构体，进行参数传递的时候要传递指针。</font></p>
+<blockquote>
+<p>goroutine 调度</p>
+</blockquote>
+<p>操作系统内核在调度时会挂起当前正在执行的线程并将寄存器中的内容保存到内存中，然后选出接下来要执行的线程并从内存中恢复该线程的寄存器信息，然后恢复执行该线程的现场并开始执行线程。从一个线程切换到另一个线程需要完整的上下文切换。因为可能需要多次内存访问，索引这个切换上下文的操作开销较大，会增加运行的cpu周期。</p>
+<p>区别于操作系统内核调度操作系统线程，goroutine 的调度是Go语言运行时（runtime）层面的实现，是完全由 Go 语言本身实现的一套调度系统——go scheduler。它的作用是按照一定的规则将所有的 goroutine 调度到操作系统线程上执行。</p>
+<p>在经历数个版本的迭代之后，目前 Go 语言的调度器采用的是 GPM 调度模型。</p>
+<p><img src="https://www.liwenzhou.com/images/Go/concurrence/gpm.png" alt="图片描述"><br>其中：</p>
+<ul>
+<li>G：表示 goroutine，每执行一次go f()就创建一个 G，包含要执行的函数和上下文信息。</li>
+<li>全局队列（Global Queue）：存放等待运行的 G。</li>
+<li>P 的本地队列：同全局队列类似，存放的也是等待运行的G，存的数量有限，不超过256个。新建 G 时，G 优先加入到 P 的本地队列，如果本地队列满了会批量移动部分 G 到全局队列。</li>
+<li>M：线程想运行任务就得获取 P，从 P 的本地队列获取 G，当 P 的本地队列为空时，M 也会尝试从全局队列或其他 P 的本地队列获取 G。M 运行 G，G 执行之后，M 会从 P 获取下一个 G，不断重复下去。</li>
+<li>Goroutine 调度器和操作系统调度器是通过 M 结合起来的，每个 M 都代表了1个内核线程，操作系统调度器负责把内核线程分配到 CPU 的核上执行。</li>
+</ul>
+<p>单从线程调度讲，Go语言相比起其他语言的优势在于OS线程是由OS内核来调度的， goroutine 则是由Go运行时（runtime）自己的调度器调度的，完全是在用户态下完成的， 不涉及内核态与用户态之间的频繁切换，包括内存的分配与释放，都是在用户态维护着一块大的内存池， 不直接调用系统的malloc函数（除非内存池需要改变），成本比调度OS线程低很多。 另一方面充分利用了多核的硬件资源，近似的把若干goroutine均分在物理线程上， 再加上本身 goroutine 的超轻量级，以上种种特性保证了 goroutine 调度方面的性能。</p>
+<h6 id="并发安全和锁"><a href="#并发安全和锁" class="headerlink" title="并发安全和锁"></a>并发安全和锁</h6><p>有时候我们的代码中可能会存在多个 goroutine 同时操作一个资源（临界区）的情况，这种情况下就会发生竞态问题（数据竞态）。这就好比现实生活中十字路口被各个方向的汽车竞争，还有火车上的卫生间被车厢里的人竞争。</p>
+<p>我们用下面的代码演示一个数据竞争的示例。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">var (</span><br><span class="line">	x int64</span><br><span class="line"></span><br><span class="line">	wg sync.WaitGroup // 等待组</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">// add 对全局变量x执行5000次加1操作</span><br><span class="line">func add() &#123;</span><br><span class="line">	for i := 0; i &lt; 5000; i++ &#123;</span><br><span class="line">		x = x + 1</span><br><span class="line">	&#125;</span><br><span class="line">	wg.Done()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	wg.Add(2)</span><br><span class="line"></span><br><span class="line">	go add()</span><br><span class="line">	go add()</span><br><span class="line"></span><br><span class="line">	wg.Wait()</span><br><span class="line">	fmt.Println(x)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码执行后，每次输出的结果都不一样，这是因为我们分别开了两个goroutine执行add()函数，这两个goroutine在修改全局参数X的时候发生了数据竞争，某个goroutine对X的修改会覆盖掉另一个goroutine的修改操作，所以最后结果每次都不一样。</p>
+<blockquote>
+<p>互斥锁</p>
+</blockquote>
+<p>互斥锁是一种常用的控制共享资源访问的方法，它能够保证同一时间只有一个 goroutine 可以访问共享资源。Go 语言中使用sync包中提供的Mutex类型来实现互斥锁。</p>
+<p>sync.Mutex提供了两个方法供我们使用。</p>
+<p>func (m *Mutex) Lock()：获取互斥锁<br>func (m *Mutex) Unlock()：释放互斥锁<br>我们在下面的示例代码中使用互斥锁限制每次只有一个 goroutine 才能修改全局变量x，从而修复上面代码中的问题。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">var (</span><br><span class="line">	x int64</span><br><span class="line">	wg sync.WaitGroup // 等待组</span><br><span class="line">	m sync.Mutex // 互斥锁</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">// add 对全局变量x执行5000次加1操作</span><br><span class="line">func add() &#123;</span><br><span class="line">	for i := 0; i &lt; 5000; i++ &#123;</span><br><span class="line">		m.Lock() // 修改x前加锁</span><br><span class="line">		x = x + 1</span><br><span class="line">		m.Unlock() // 改完解锁</span><br><span class="line">	&#125;</span><br><span class="line">	wg.Done()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	wg.Add(2)</span><br><span class="line"></span><br><span class="line">	go add()</span><br><span class="line">	go add()</span><br><span class="line"></span><br><span class="line">	wg.Wait()</span><br><span class="line">	fmt.Println(x)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将上面的代码编译后多次执行，每一次都会得到预期中的结果——10000。</p>
+<p>使用互斥锁能够保证同一时间有且只有一个 goroutine 进入临界区，其他的 goroutine 则在等待锁；当互斥锁释放后，等待的 goroutine 才可以获取锁进入临界区，多个 goroutine 同时等待一个锁时，<font color="red">唤醒的策略是随机的</font>。</p>
+<blockquote>
+<p>读写互斥锁</p>
+</blockquote>
+<p>sync.RWMutex提供了以下5个方法。<br>func (rw *RWMutex) Lock()：获取写锁<br>func (rw *RWMutex) Unlock()：释放写锁<br>func (rw *RWMutex) RLock()：获取读锁<br>func (rw *RWMutex) RUnlock()：释放读锁<br>func (rw *RWMutex) RLocker() Locker：返回一个实现Locker接口的读写锁 </p>
+<p>读写锁分为两种：读锁和写锁。<br>当一个goroutine获取读锁之后，其他的goroutine如果是获取读锁会继续获得锁，如果是获取写锁就会等待；<br>当一个goroutine获取写锁之后，其他的goroutine无论是获取读锁还是写锁都会等待。</p>
+<ul>
+<li>读锁RLock() ，我开始读了，你们也可以来读，但是谁都别写</li>
+<li>写锁Lock() ，我要写了，所有人注意，别做任何操作</li>
+</ul>
+<p>下面我们使用代码构造一个读多写少的场景，然后分别使用互斥锁和读写锁查看它们的性能差异。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">var (</span><br><span class="line">	x       int64</span><br><span class="line">	wg      sync.WaitGroup</span><br><span class="line">	mutex   sync.Mutex</span><br><span class="line">	rwMutex sync.RWMutex</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">// writeWithLock 使用互斥锁的写操作</span><br><span class="line">func writeWithLock() &#123;</span><br><span class="line">	mutex.Lock() // 加互斥锁</span><br><span class="line">	x = x + 1</span><br><span class="line">	time.Sleep(10 * time.Millisecond) // 假设读操作耗时10毫秒</span><br><span class="line">	mutex.Unlock()                    // 解互斥锁</span><br><span class="line">	wg.Done()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// readWithLock 使用互斥锁的读操作</span><br><span class="line">func readWithLock() &#123;</span><br><span class="line">	mutex.Lock()                 // 加互斥锁</span><br><span class="line">	time.Sleep(time.Millisecond) // 假设读操作耗时1毫秒</span><br><span class="line">	mutex.Unlock()               // 释放互斥锁</span><br><span class="line">	wg.Done()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// writeWithLock 使用读写互斥锁的写操作</span><br><span class="line">func writeWithRWLock() &#123;</span><br><span class="line">	rwMutex.Lock() // 加写锁</span><br><span class="line">	x = x + 1</span><br><span class="line">	time.Sleep(10 * time.Millisecond) // 假设读操作耗时10毫秒</span><br><span class="line">	rwMutex.Unlock()                  // 释放写锁</span><br><span class="line">	wg.Done()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// readWithRWLock 使用读写互斥锁的读操作</span><br><span class="line">func readWithRWLock() &#123;</span><br><span class="line">	rwMutex.RLock()              // 加读锁</span><br><span class="line">	time.Sleep(time.Millisecond) // 假设读操作耗时1毫秒</span><br><span class="line">	rwMutex.RUnlock()            // 释放读锁</span><br><span class="line">	wg.Done()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func do(wf, rf func(), wc, rc int) &#123;</span><br><span class="line">	start := time.Now()</span><br><span class="line">	// wc个并发写操作</span><br><span class="line">	for i := 0; i &lt; wc; i++ &#123;</span><br><span class="line">		wg.Add(1)</span><br><span class="line">		go wf()</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//  rc个并发读操作</span><br><span class="line">	for i := 0; i &lt; rc; i++ &#123;</span><br><span class="line">		wg.Add(1)</span><br><span class="line">		go rf()</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	wg.Wait()</span><br><span class="line">	cost := time.Since(start)</span><br><span class="line">	fmt.Printf(&quot;x:%v cost:%v\n&quot;, x, cost)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">	do(writeWithRWLock, readWithRWLock, 10, 1000)</span><br><span class="line">	do(writeWithLock, readWithLock, 10, 1000)</span><br><span class="line">	//x:10 cost:108.404034ms</span><br><span class="line">	//x:20 cost:1.238981628s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们假设每一次读操作都会耗时1ms，而每一次写操作会耗时10ms，我们分别测试使用互斥锁和读写互斥锁执行10次并发写和1000次并发读的耗时数据。<br>从最终的执行结果可以看出，使用读写互斥锁在读多写少的场景下能够极大地提高程序的性能。不过需要注意的是如果一个程序中的读操作和写操作数量级差别不大，那么读写互斥锁的优势就发挥不出来。</p>
+<blockquote>
+<p>sync.Once</p>
+</blockquote>
+<p>在某些场景下我们需要确保某些操作即使在高并发的场景下也只会被执行一次，例如只加载一次配置文件等。</p>
+<p>Go语言中的sync包中提供了一个针对只执行一次场景的解决方案——sync.Once，sync.Once只有一个Do方法，其签名如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func (o *Once) Do(f func())</span><br></pre></td></tr></table></figure>
+<p><font color="red">注意</font>：如果要执行的函数f需要传递参数就需要搭配闭包来使用。</p>
+<h5>加载配置文件示例</h5>
+延迟一个开销很大的初始化操作到真正用到它的时候再执行是一个很好的实践。因为预先初始化一个变量（比如在init函数中完成初始化）会增加程序的启动耗时，而且有可能实际执行过程中这个变量没有用上，那么这个初始化操作就不是必须要做的。我们来看一个例子：
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">var icons map[string]image.Image</span><br><span class="line"></span><br><span class="line">func loadIcons() &#123;</span><br><span class="line">	icons = map[string]image.Image&#123;</span><br><span class="line">		&quot;left&quot;:  loadIcon(&quot;left.png&quot;),</span><br><span class="line">		&quot;up&quot;:    loadIcon(&quot;up.png&quot;),</span><br><span class="line">		&quot;right&quot;: loadIcon(&quot;right.png&quot;),</span><br><span class="line">		&quot;down&quot;:  loadIcon(&quot;down.png&quot;),</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Icon 被多个goroutine调用时不是并发安全的</span><br><span class="line">func Icon(name string) image.Image &#123;</span><br><span class="line">	if icons == nil &#123;</span><br><span class="line">		loadIcons()</span><br><span class="line">	&#125;</span><br><span class="line">	return icons[name]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+多个goroutine 调用loadIcons函数时会在调用时初始化icons的数据，但是每次调用时icons的数据并不一定初始化完成，导致数据访问出错。根据之前的方法我们可以给loadIcons方法添加互斥锁，但是这样又会导致性能问题，因为每个goroutine执行时数据虽然不会出错，但是每次都会重新初始化icons数据。因此我们可以使用`sync.Once`进行改造：
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">var icons map[string]image.Image</span><br><span class="line"></span><br><span class="line">var loadIconsOnce sync.Once</span><br><span class="line"></span><br><span class="line">func loadIcons() &#123;</span><br><span class="line">	icons = map[string]image.Image&#123;</span><br><span class="line">		&quot;left&quot;:  loadIcon(&quot;left.png&quot;),</span><br><span class="line">		&quot;up&quot;:    loadIcon(&quot;up.png&quot;),</span><br><span class="line">		&quot;right&quot;: loadIcon(&quot;right.png&quot;),</span><br><span class="line">		&quot;down&quot;:  loadIcon(&quot;down.png&quot;),</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Icon 是并发安全的</span><br><span class="line">func Icon(name string) image.Image &#123;</span><br><span class="line">	loadIconsOnce.Do(loadIcons)</span><br><span class="line">	return icons[name]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+这样一来只会在第一次初始化时生成数据，且之后的每次调用都会判断是否已经初始化完成，完成即不在初始化直接返回值。
+这跟单例模式有点相像，所以下面我们来看一个`sync.Once`实现的单例模式：
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">type singleton struct &#123;&#125;</span><br><span class="line"></span><br><span class="line">var instance *singleton</span><br><span class="line">var once sync.Once</span><br><span class="line"></span><br><span class="line">func GetInstance() *singleton &#123;</span><br><span class="line">    once.Do(func() &#123;</span><br><span class="line">        instance = &amp;singleton&#123;&#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    return instance</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+`sync.Once`其实内部包含一个互斥锁和一个布尔值，互斥锁保证布尔值和数据的安全，而布尔值用来记录初始化是否完成。这样设计就能保证初始化操作的时候是并发安全的并且初始化操作也不会被执行多次。
+
+<blockquote>
+<p>sync.Map</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Go 语言中内置的 map 不是并发安全的，</span><br><span class="line"></span><br><span class="line">var m = make(map[string]int)</span><br><span class="line"></span><br><span class="line">func get(key string) int &#123;</span><br><span class="line">	return m[key]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func set(key string, value int) &#123;</span><br><span class="line">	m[key] = value</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	wg := sync.WaitGroup&#123;&#125;</span><br><span class="line">	for i := 0; i &lt; 10; i++ &#123;</span><br><span class="line">		wg.Add(1)</span><br><span class="line">		go func(n int) &#123;</span><br><span class="line">			key := strconv.Itoa(n)</span><br><span class="line">			set(key, n)</span><br><span class="line">			fmt.Printf(&quot;k=:%v,v:=%v\n&quot;, key, get(key))</span><br><span class="line">			wg.Done()</span><br><span class="line">		&#125;(i)</span><br><span class="line">	&#125;</span><br><span class="line">	wg.Wait()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将上面的代码编译后执行，会报出<code>fatal error: concurrent map writes</code>错误。我们不能在多个 goroutine 中并发对内置的 map 进行读写操作，否则会存在数据竞争问题。<br>像这种场景下就需要为 map 加锁来保证并发的安全性了，Go语言的sync包中提供了一个开箱即用的并发安全版 map——sync.Map。开箱即用表示其不用像内置的 map 一样使用 make 函数初始化就能直接使用。同时sync.Map内置了诸如Store、Load、LoadOrStore、Delete、Range等操作方法。</p>
+<p>func (m *Map) Store(key, value interface{})：存储key-value数据<br>func (m *Map) Load(key interface{}) (value interface{}, ok bool)：查询key对应的value<br>func (m *Map) LoadOrStore(key, value interface{}) (actual interface{}, loaded bool)：查询或存储key对应的value<br>func (m *Map) LoadAndDelete(key interface{}) (value interface{}, loaded bool)：查询并删除key<br>func (m *Map) Delete(key interface{})：删除key<br>func (m *Map) Range(f func(key, value interface{}) bool)：对map中的每个key-value依次调用f</p>
+<p>下面的代码示例演示了并发读写sync.Map：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// 并发安全的map</span><br><span class="line">var m = sync.Map&#123;&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	wg := sync.WaitGroup&#123;&#125;</span><br><span class="line">	// 对m执行20个并发的读写操作</span><br><span class="line">	for i := 0; i &lt; 20; i++ &#123;</span><br><span class="line">		wg.Add(1)</span><br><span class="line">		go func(n int) &#123;</span><br><span class="line">			key := strconv.Itoa(n)</span><br><span class="line">			m.Store(key, n)         // 存储key-value</span><br><span class="line">			value, _ := m.Load(key) // 根据key取值</span><br><span class="line">			fmt.Printf(&quot;k=:%v,v:=%v\n&quot;, key, value)</span><br><span class="line">			wg.Done()</span><br><span class="line">		&#125;(i)</span><br><span class="line">	&#125;</span><br><span class="line">	wg.Wait()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>原子操作</p>
+</blockquote>
+<p>针对整数数据类型（int32、uint32、int64、uint64）我们还可以使用原子操作来保证并发安全，通常直接使用原子操作比使用锁操作效率更高。Go语言中原子操作由内置的标准库sync&#x2F;atomic提供。</p>
+<p><img src="https://image.jokernote.com/golang/WeChat1f7ed5064c81ec3a001f8b8eece09058.png?x-oss-process=image/resize,w_700" alt="图片描述"></p>
+<p>我们填写一个示例来比较下互斥锁和原子操作的性能</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">type Counter interface &#123;</span><br><span class="line">	Inc()</span><br><span class="line">	Load() int64</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 普通版</span><br><span class="line">type CommonCounter struct &#123;</span><br><span class="line">	counter int64</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (c CommonCounter) Inc() &#123;</span><br><span class="line">	c.counter++</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (c CommonCounter) Load() int64 &#123;</span><br><span class="line">	return c.counter</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 互斥锁版</span><br><span class="line">type MutexCounter struct &#123;</span><br><span class="line">	counter int64</span><br><span class="line">	lock    sync.Mutex</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (m *MutexCounter) Inc() &#123;</span><br><span class="line">	m.lock.Lock()</span><br><span class="line">	defer m.lock.Unlock()</span><br><span class="line">	m.counter++</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (m *MutexCounter) Load() int64 &#123;</span><br><span class="line">	m.lock.Lock()</span><br><span class="line">	defer m.lock.Unlock()</span><br><span class="line">	return m.counter</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 原子操作版</span><br><span class="line">type AtomicCounter struct &#123;</span><br><span class="line">	counter int64</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (a *AtomicCounter) Inc() &#123;</span><br><span class="line">	atomic.AddInt64(&amp;a.counter, 1)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (a *AtomicCounter) Load() int64 &#123;</span><br><span class="line">	return atomic.LoadInt64(&amp;a.counter)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func test(c Counter) &#123;</span><br><span class="line">	var wg sync.WaitGroup</span><br><span class="line">	start := time.Now()</span><br><span class="line">	for i := 0; i &lt; 1000; i++ &#123;</span><br><span class="line">		wg.Add(1)</span><br><span class="line">		go func() &#123;</span><br><span class="line">			c.Inc()</span><br><span class="line">			wg.Done()</span><br><span class="line">		&#125;()</span><br><span class="line">	&#125;</span><br><span class="line">	wg.Wait()</span><br><span class="line">	end := time.Now()</span><br><span class="line">	fmt.Println(c.Load(), end.Sub(start))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	c1 := CommonCounter&#123;&#125; // 非并发安全</span><br><span class="line">	test(c1)</span><br><span class="line">	c2 := MutexCounter&#123;&#125; // 使用互斥锁实现并发安全</span><br><span class="line">	test(&amp;c2)</span><br><span class="line">	c3 := AtomicCounter&#123;&#125; // 并发安全且比互斥锁效率更高</span><br><span class="line">	test(&amp;c3)</span><br><span class="line">&#125;</span><br><span class="line">//0 598.714µs </span><br><span class="line">//1000 452.944µs</span><br><span class="line">//1000 348.842µs</span><br></pre></td></tr></table></figure>
+
+<p>atomic包提供了底层的原子级内存操作，对于同步算法的实现很有用。这些函数必须谨慎地保证正确使用。除了某些特殊的底层应用，使用通道或者 sync 包的函数&#x2F;类型实现同步更好。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/31/golang%E5%B9%B6%E5%8F%91%E7%9A%84%E5%89%AF%E6%9C%AC/" data-id="cl4v3jgak0006acs617ci7ncp" data-title="golang并发" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GOLANG/" rel="tag">GOLANG</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/05/31/golang%E5%A4%8D%E5%90%88%E6%95%B0%E6%8D%AE%E7%9A%84%E5%89%AF%E6%9C%AC/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          golang复合数据
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/05/31/golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%8F%8D%E5%B0%84%E7%9A%84%E5%89%AF%E6%9C%AC/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">golang接口与反射</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/GOLANG/">GOLANG</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/GOLANG/" rel="tag">GOLANG</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/GOLANG/" style="font-size: 10px;">GOLANG</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/05/31/golang%E5%87%BD%E6%95%B0%E7%9A%84%E5%89%AF%E6%9C%AC/">golang函数</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/31/golang%E5%8C%85%E7%9A%84%E5%89%AF%E6%9C%AC/">golang包</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/31/golang%E5%9F%BA%E7%A1%80%E7%9A%84%E5%89%AF%E6%9C%AC/">golang运算基础</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/31/golang%E5%A4%8D%E5%90%88%E6%95%B0%E6%8D%AE%E7%9A%84%E5%89%AF%E6%9C%AC/">golang复合数据</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/31/golang%E5%B9%B6%E5%8F%91%E7%9A%84%E5%89%AF%E6%9C%AC/">golang并发</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

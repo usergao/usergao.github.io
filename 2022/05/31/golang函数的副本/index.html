@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>golang函数 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="函数我们已经认识了main()函数，是程序的入口，因为go 是编译型语言，所以函数编写的顺序无关紧要，但是为了可读性，一般把main（）函数卸载文件前面，但是其他函数需要按照一定的逻辑顺序编写。 认识函数在golang中，函数和其他语言的方法不一样，有明显的区分，函数是指不属于任何结构体、类型的方法，也就是说，函数是没有接受者的，而方法是有接受者的，方法要么属于一个结构体，要么数以一个新定义的类型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang函数">
+<meta property="og:url" content="http://example.com/2022/05/31/golang%E5%87%BD%E6%95%B0%E7%9A%84%E5%89%AF%E6%9C%AC/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="函数我们已经认识了main()函数，是程序的入口，因为go 是编译型语言，所以函数编写的顺序无关紧要，但是为了可读性，一般把main（）函数卸载文件前面，但是其他函数需要按照一定的逻辑顺序编写。 认识函数在golang中，函数和其他语言的方法不一样，有明显的区分，函数是指不属于任何结构体、类型的方法，也就是说，函数是没有接受者的，而方法是有接受者的，方法要么属于一个结构体，要么数以一个新定义的类型">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-05-31T06:23:00.000Z">
+<meta property="article:modified_time" content="2022-06-20T20:04:10.673Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="GOLANG">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-golang函数的副本" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/31/golang%E5%87%BD%E6%95%B0%E7%9A%84%E5%89%AF%E6%9C%AC/" class="article-date">
+  <time class="dt-published" datetime="2022-05-31T06:23:00.000Z" itemprop="datePublished">2022-05-31</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/GOLANG/">GOLANG</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      golang函数
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>我们已经认识了main()函数，是程序的入口，因为go 是编译型语言，所以函数编写的顺序无关紧要，但是为了可读性，一般把main（）函数卸载文件前面，但是其他函数需要按照一定的逻辑顺序编写。</p>
+<h4 id="认识函数"><a href="#认识函数" class="headerlink" title="认识函数"></a>认识函数</h4><p>在golang中，函数和其他语言的方法不一样，有明显的区分，函数是指不属于任何结构体、类型的方法，也就是说，函数是没有接受者的，而方法是有接受者的，方法要么属于一个结构体，要么数以一个新定义的类型。（？？？？？）</p>
+<h4 id="函数声明"><a href="#函数声明" class="headerlink" title="函数声明"></a>函数声明</h4><p>一个完整的函数声明结构格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func funcName(input1 type1, input2 type2)(output1 type1, outtype2 type2)  &#123;</span><br><span class="line">	return value1, value2 // 返回多值</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从以上可以看出 func 是用来声明函数的，而 funcName 是指函数名称（匿名函数和lambda函数除外）。函数名称如果是小写的，它的作用于只属于所声明的包，不能被其它包调用。如果函数名以大写字母开头，则该函数是公开的，可以被其他包调用。这是go语言中大小写的用处，这个规则适用于所有变量、函数等实体对象的声明，类似PHP的作用于关键字（private、public、protect等）。</p>
+<p>此外，go语言不支持嵌套（nested）、重载（overload）和默认参数（default parameter）。</p>
+<p>声明一个在外部定义的函数只需给出函数名和函数签名，不需要写出完整的函数体：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func hello(str, num int) // 外部实现</span><br></pre></td></tr></table></figure>
+<p>函数同样可以通过声明的方式作为一个函数类型被使用，就像下面这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type addNum func(int, int) int</span><br></pre></td></tr></table></figure>
+<p>此处不需要函数体{}，因为函数在go语言属于一等值（first-class value），函数也可以复制给变量，例如 add :&#x3D; addNum，由于变量执行了 addNum 函数的前面，所以不能再给他赋一个具有不同签名的函数值。</p>
+<p>不过函数值（functions value）之间是可以相互比较的，比如他们引用的都是相同的函数，或者返回值都是nil，则可以认为它们是相同的函数。函数不能再其他函数里面声明，也就是不能嵌套（匿名函数除外）</p>
+<p><font color="red">匿名函数就是没有名字的函数</font></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">res1 := func (n1 int, n2 int) int &#123;</span><br><span class="line">    return n1 + n2</span><br><span class="line">&#125;(10, 30)  //括号里的10,30 就相当于参数列表，分别对应n1和n2</span><br><span class="line"></span><br><span class="line">fmt.Println(&quot;res1=&quot;,res1)</span><br></pre></td></tr></table></figure>
+
+<p>函数可以有一个或者多个参数，每个参数后面带有类型，通过 ，分割。如果参数列表中若干个相邻参数的类型相同，比如下面例子中的a和b，则可以在参数列表中省略前面变量的类型声明：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func Add(a, b int)(ret int, err error)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果返回值列表中多个返回值的类型相同，也可以用同样的方式合并，如果函数只有一个返回值，也可以这样写：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func Add(a, b int) int&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>函数可以有多个返回值，也是go语言的一大特性，多返回值也意味着有时候返回值并不是全部需要</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var a int</span><br><span class="line">	var b float32</span><br><span class="line">	a, _, b = ThreeValues()</span><br><span class="line">	fmt.Printf(&quot;int is %d, float is %f \n&quot;, a, b)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func ThreeValues() (int, int, float32) &#123;</span><br><span class="line">	return 5, 0, 7.99</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*int is 5, float is 7.990000 */</span><br></pre></td></tr></table></figure>
+<p>代码中第一个与第三个值赋予了a和b，第二个返回值赋予了空白标识符“_”，然后自动丢弃掉</p>
+<p>函数是第一类对象，可以作为参数传递，只要被调用函数的返回值个数、返回类型和返回值的顺序与调用函数所需要的参数一致，就可以把这个被调用的函数当做其他函数的参数。</p>
+<p>同时建议将复杂签名定义为函数类型，以便于阅读</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">func pipe(ff func() int) int &#123;</span><br><span class="line">	return ff()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type FormatFunc func(s string, x, y int) string</span><br><span class="line"></span><br><span class="line">func format(ff FormatFunc, s string, x, y int) string &#123;</span><br><span class="line">	return ff(s, x, y)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">s1 := pipe(func() int &#123; return 300 &#125;)</span><br><span class="line">s2 := format(func(s string, x, y int) string &#123;</span><br><span class="line">	return fmt.Sprintf(s, x, y)</span><br><span class="line">&#125;, &quot;%d, %d&quot;, 10, 10)</span><br><span class="line"></span><br><span class="line">fmt.Println(s1, s2)</span><br><span class="line">/*300 10, 10*/</span><br></pre></td></tr></table></figure>
+<h6 id="函数类型"><a href="#函数类型" class="headerlink" title="函数类型"></a>函数类型</h6><p>函数在go语言中也是一种变量，前面多次使用type，它的类型就是所有拥有相同参数与返回值的一种函数类型</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">func isOdd(v int) bool &#123;</span><br><span class="line">	if v%2 == 0 &#123;</span><br><span class="line">		return false</span><br><span class="line">	&#125;</span><br><span class="line">	return true</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func isEven(v int) bool &#123;</span><br><span class="line">	if v%2 == 0 &#123;</span><br><span class="line">		return false</span><br><span class="line">	&#125;</span><br><span class="line">	return true</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type boolFunc func(int) bool</span><br><span class="line"></span><br><span class="line">func filter(slice []int, f boolFunc) []int &#123;</span><br><span class="line">	var result []int</span><br><span class="line"></span><br><span class="line">	for _, value := range slice &#123;</span><br><span class="line">		if f(value) &#123;</span><br><span class="line">			result = append(result, value)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return result</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">slice := []int&#123;3, 1, 4, 5, 9, 2&#125;</span><br><span class="line">fmt.Println(&quot;slice is &quot;, slice)</span><br><span class="line">odd := filter(slice, isOdd) // 函数当作值传递</span><br><span class="line">fmt.Println(&quot;odd : &quot;, odd)</span><br><span class="line">even := filter(slice, isEven) // 函数当作值传递</span><br><span class="line">fmt.Println(&quot;even : &quot;, even)</span><br><span class="line"></span><br><span class="line">/*	//slice is  [3 1 4 5 9 2]</span><br><span class="line">	//odd :  [3 1 5 9]</span><br><span class="line">	//even :  [3 1 5 9]*/</span><br></pre></td></tr></table></figure>
+
+<p>上面的 boolFunc 是一个函数类型，isOdd和isEven函数的参数和返回值相同，所以在调用filter函数时使filter函数实现不同的功能</p>
+<h6 id="可变参数"><a href="#可变参数" class="headerlink" title="可变参数"></a>可变参数</h6><p>go语言支持可变参数（有着不定数量的参数）写法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func myFunc(arg ...int) &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>如果函数的最后一个参数是 <font color="red">…type</font> 的形式，那这个函数就是一个变参参数，且这个长度可以为0，无论变参有多少个，它们的类型始终一样<br>实例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">func minOrMax(m string, a ...int) int &#123;</span><br><span class="line">	if len(a) == 0 &#123;</span><br><span class="line">		return 0</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	if m == &quot;max&quot; &#123;</span><br><span class="line">		max := a[0]</span><br><span class="line">		for _, v := range a &#123;</span><br><span class="line">			if v &gt; max &#123;</span><br><span class="line">				max = v</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return max</span><br><span class="line">	&#125; else if m == &quot;min&quot; &#123;</span><br><span class="line">		min := a[0]</span><br><span class="line">		for _, v := range a &#123;</span><br><span class="line">			if v &lt; min &#123;</span><br><span class="line">				min = v</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return min</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		e := -1</span><br><span class="line">		return e</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">// 手动填写参数</span><br><span class="line">min := minOrMax(&quot;min&quot;, 7, 2, 5, 3, 17, 3)</span><br><span class="line">fmt.Printf(&quot;min is %d&quot;, min)</span><br><span class="line">age := []int&#123;7, 2, 6, 22, 1, 55, 20&#125;</span><br><span class="line">max := minOrMax(&quot;max&quot;, age...)</span><br><span class="line">fmt.Printf(&quot;max is %d&quot;, max)</span><br><span class="line">/*min is 2max is 55*/</span><br></pre></td></tr></table></figure>
+<p>上面的minOrMax就是使用了两种不同类型的参数，不同类型的参数需要单独声明，而可变参数必须是同一种类型<br>下面的例子就是接收一个变参并打印每个元素，比较f2和f3的区别，一个接收变参的函数可以将这个变参作为其他函数的参数进行传递</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">func f1(arr ...int) &#123;</span><br><span class="line">	f2(arr...)</span><br><span class="line">	fmt.Println(&quot;&quot;)</span><br><span class="line">	f3(arr)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func f2(arr ...int) &#123;</span><br><span class="line">	for _, v := range arr &#123;</span><br><span class="line">		fmt.Printf(&quot;%d &quot;, v)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func f3(arr []int) &#123;</span><br><span class="line">	for _, v := range arr &#123;</span><br><span class="line">		fmt.Printf(&quot;%d &quot;, v)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">age := []int&#123;17, 20, 32, 15, 55&#125;</span><br><span class="line">f1(age...)</span><br><span class="line">/*17 20 32 15 55</span><br><span class="line">17 20 32 15 55*/</span><br></pre></td></tr></table></figure>
+<p>变长参数可以作为对应类型的slice进行二次传递，从内部实现机制来说，类型…type本质上是一个数组切片，也就是{}type，这也是arr可以用for循环来获得每个值的原因<br>函数f2和f3的最大区别在于调用方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f2(17 20 32 15 55) // 可变参数，随便写多少个</span><br><span class="line">f3([]int&#123;17 20 32 15 55&#125;) // 需要加上[]int来创建一个数组切片实例</span><br></pre></td></tr></table></figure>
+<p>如果可变参数是多种类型，可以指定类型为interface{}，也就是接口，下面是go语言标准库中fmt.PrintF()的函数原型：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func PrintF(format string, args ...interface&#123;&#125;) &#123;</span><br><span class="line">    // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>常用的PrintF函数就是一个变参函数，而且不限制参数类型，用interface{}传递任意类型数据是go语言的习惯用法。interface{}是类型安全的</p>
+<h6 id="匿名函数与闭包"><a href="#匿名函数与闭包" class="headerlink" title="匿名函数与闭包"></a>匿名函数与闭包</h6><p>匿名函数是指不需要定义函数名的一种函数定义方式，以下就是一个简单的匿名函数例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func(x, y int) int &#123;return x + y&#125;</span><br></pre></td></tr></table></figure>
+<p>因为在函数声明时没有函数名称，所以一般赋值于某个变量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">argPlus := func(x, y int) int &#123;return x + y&#125;</span><br><span class="line">argPlus(5, 6) // 返回11</span><br></pre></td></tr></table></figure>
+<p>同时也可以匿名参数后面紧跟函数运行参数直接调用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func(x, y int) int &#123;return x + y&#125;(3, 5)</span><br></pre></td></tr></table></figure>
+<p>函数列表的第一对扩号必须紧挨着关键字func，因为匿名函数没有名称，花括号涵盖着函数体，最后的一对扩号表示对该函数的调用</p>
+<h6 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h6><p>匿名函数同样称为闭包，简单来说闭包允许调用定义在其他环境下的变量，可以让某个函数捕捉到一些外部状态，例如函数被创建时的状态。用专业的语言来说就是：一个闭包继承了函数声明时的作用域，这种状态（作用域内的变量）会共享到闭包的环境中，因此这些变量可以在闭包中被操作，直到被销毁。闭包常用作包装函数，预先定义一个或者多个参数以用以包装，另一个常见的应用就是使用闭包来完成更加简介的错误检查，闭包的体现形式，通常就是用函数返回另一个函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">j := 5</span><br><span class="line">a := func() func() &#123;</span><br><span class="line">	i := 10</span><br><span class="line">	return func() &#123;</span><br><span class="line">		fmt.Printf(&quot;j is %d i is %d&quot;, j, i)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;()</span><br><span class="line"></span><br><span class="line">a()</span><br><span class="line">j = 12 // 将一个新的值赋予j</span><br><span class="line">a()</span><br><span class="line">//j is 5 i is 10j is 12 i is 10</span><br></pre></td></tr></table></figure>
+<p>上面这个例子中，j变量的值在闭包之外初始化，当闭包第一获取j 的值时，返回的是初始化的5，第二次获取时，闭包反悔了赋值之后的j值10。在变量a指向的闭包函数中，只有内部的函数才能访问变量i，其它途径无法访问到，因此保证了i的安全性。下面是另一种不一样的写法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">	var f = adder()</span><br><span class="line">	fmt.Println(f(1))</span><br><span class="line">	fmt.Println(f(2))</span><br><span class="line">	fmt.Println(f(3))</span><br><span class="line">&#125;</span><br><span class="line">func adder() func(int) int &#123;</span><br><span class="line">	var x int // 闭包中的变量可以在闭包函数体内声明，也可以在外部函数声明</span><br><span class="line"></span><br><span class="line">	return func(d int) int &#123;</span><br><span class="line">		fmt.Println(&quot;x = &quot;, x, &quot;d = &quot;, d)</span><br><span class="line">		x += d</span><br><span class="line">		return x</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">/*x =  0 d =  1</span><br><span class="line">1</span><br><span class="line">x =  1 d =  2</span><br><span class="line">3</span><br><span class="line">x =  3 d =  3</span><br><span class="line">6*/</span><br></pre></td></tr></table></figure>
+<p>三次调用函数adder中变量d的值分别是1，2，3，通过func(d int) 传递，而在多次调用中，变量x的值是保留的，一开始默认为0，即0+1&#x3D;1，1+2&#x3D;3，3+3&#x3D;6，闭包函数保存并积累其中的变量的值，不管外部函数是否退出，它都能够继续操作外部函数中的局部变量，这些局部变量同样可以是参数。以下是更直观的操作：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">	addNumber := getSequence()</span><br><span class="line"></span><br><span class="line">	fmt.Printf(&quot;%d &quot;, addNumber())</span><br><span class="line">	fmt.Printf(&quot;%d &quot;, addNumber())</span><br><span class="line">	fmt.Printf(&quot;%d &quot;, addNumber())</span><br><span class="line"></span><br><span class="line">	addNumber1 := getSequence()</span><br><span class="line">	fmt.Printf(&quot;%d &quot;, addNumber1())</span><br><span class="line">	fmt.Printf(&quot;%d &quot;, addNumber1())</span><br><span class="line">&#125;</span><br><span class="line">func getSequence() func() int &#123;</span><br><span class="line">	i := 0</span><br><span class="line">	return func() int &#123;</span><br><span class="line">		i++</span><br><span class="line">		return i</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个例子清晰的展示了go语言闭包在环境继承方面的特性</p>
+<h5 id="递归函数"><a href="#递归函数" class="headerlink" title="递归函数"></a>递归函数</h5><p>递归就是在运行的过程中调用自己，语法格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">func recursion() &#123;</span><br><span class="line">    recursion()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">recursion()</span><br></pre></td></tr></table></figure>
+<p>go语言支持递归，但是在使用递归时，需要设置退出条件，否则将陷入无限的循环当中。递归函数对于解决数学上的问题是非常有用的，一下实例通过go语言的递归函数实现阶乘运算：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">	i := 60</span><br><span class="line">	fmt.Printf(&quot;%d&quot;, Factorial(uint64(i))) // 因为阶乘的数字可能会过大，所以使用unint64位</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func Factorial(n uint64) (result uint64) &#123;</span><br><span class="line">	if n &gt; 0 &#123;</span><br><span class="line">		result = n * Factorial(n-1)</span><br><span class="line">		return result</span><br><span class="line">	&#125;</span><br><span class="line">	return 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以下是使用递归实现斐波那契数列：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">	for i := 0; i &lt; 10; i++ &#123;</span><br><span class="line">		fmt.Printf(&quot;%d &quot;, fibonacci(i))</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">//0 1 1 2 3 5 8 13 21 34</span><br><span class="line"></span><br><span class="line">func fibonacci(n int) int &#123;</span><br><span class="line">	if n &lt; 2 &#123;</span><br><span class="line">		return n</span><br><span class="line">	&#125;</span><br><span class="line">	return fibonacci(n-2) + fibonacci(n-1)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>递归可以优雅的解决很多问题，经常使用的快速排序就是通过递归实现的。有时候递归函数在使用时可能遇到栈溢出的问题，当大量的递归调用导致程序栈内存分配耗尽就会产生栈溢出，好在通过懒惰求值的方法可以解决这个问题，在go语言中可以通过管道（channel）和goroutine来解决</p>
+<h6 id="内置函数"><a href="#内置函数" class="headerlink" title="内置函数"></a>内置函数</h6><p>内置函数是不需要进行导入操作就可以直接使用的函数，有些可以根据不同的类型进行操作（len、cap和append），有些用于系统级的操作（panic），不管哪种，他们都需要直接获得编译器的支持。<br>常见内置函数有如下几种：</p>
+<ul>
+<li>close：用于管道通信</li>
+<li>len：用于返回某个类型的长度或数量（字符串、数组、切片、map和管道）</li>
+<li>cap：容量的意思，用于返回某个类型的最大容量（只能用于切片和map）</li>
+<li>new、make：均用于内存分配，不过new用于值类型和用户定义的类型，如自定义结构，make用于内置引用类型（切片、map和管道）。它们的用法就像是函数，但是将类型作为参数：new(type)、make(type)。new(T)分配类型T的零值并返回器地址，也就是指向类型T的指针，它也可以用于基本类型：v:&#x3D;new(int)。make(T)返回T初始化之后的值，因此它比new做更多的工作。new()是一个函数，因此要记得加上扩号。</li>
+<li>copy、append：用于复制和链接切片</li>
+<li>panic、recover：两者均用于错误处理机制</li>
+<li>print、println：底层打印函数（部署环境中建议使用fmt包）</li>
+<li>complex、real imag：用于创建和操作复数</li>
+</ul>
+<h4 id="函数进阶"><a href="#函数进阶" class="headerlink" title="函数进阶"></a>函数进阶</h4><h6 id="函数传递机制"><a href="#函数传递机制" class="headerlink" title="函数传递机制"></a>函数传递机制</h6><p>go语言的参数传递可以分为“按值传递”和“按引用传递”，默认为按值传递，传递的是参数的副本，函数接收参数副本后，使用变量的过程中可能对副本的值进行更改，但不会影响原来的变量，换句话来说，调用函数时修改参数的值，不会影响原来的实参的值，因为数值变化只会作用在副本上。<br>所以要当函数直接修改参数的值，而不是对参数的副本进行修改，就需要将参数的地址（变量名前面添加&amp;符号）传递给函数，这就是“按引用传递”，此时传递给函数的是一个指针。<br>如果把指针传递给函数，指针的值（一个地址）就会被复制，但指针的值指向的地址上的那个值不会被复制（被复制的事指针，但两个指针实际上指向的是同一个实际的值）。这样一来，修改这个指针的值，实际上意味着这个值指向的地址上的值被修改了（指针也是变量类型，有自己的地址和值，通常指针的只指向一个变量的地址，所以按引用传递其实也是按值传递）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">	x := 1</span><br><span class="line">	fmt.Println(&quot;x= &quot;, x, &quot;&amp;x= &quot;, &amp;x)</span><br><span class="line">	y := add(x)</span><br><span class="line">	fmt.Println(&quot;x= &quot;, x, &quot;y= &quot;, y)</span><br><span class="line">	z := add1(&amp;x)</span><br><span class="line">	fmt.Println(&quot;x= &quot;, x, &quot;z=&quot;, z)</span><br><span class="line">	fmt.Println(&quot;&amp;x= &quot;, &amp;x)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func add(a int) int &#123;</span><br><span class="line">	a++</span><br><span class="line">	return a</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func add1(a *int) int &#123;</span><br><span class="line">	*a++</span><br><span class="line">	return *a</span><br><span class="line">&#125;</span><br><span class="line">/*x=  1 &amp;x=  0xc0000b2008</span><br><span class="line">x=  1 y=  2</span><br><span class="line">x=  2 z= 2</span><br><span class="line">&amp;x=  0xc0000b2008*/</span><br></pre></td></tr></table></figure>
+<p>add()函数中x变量的值没有发生变化，而add1()函数中的x值变了。当调用add()的时候，add()接受的参数其实是x的副本，而不是x本身；而add1()函数接受的参数是一个指针，指向的是x的本身，所以x实际的值发生了变化<br>使用指针最明显的三个好处如下</p>
+<ul>
+<li>传指针可以是多个函数能操作同一个对象</li>
+<li>传指针比较轻量级（8B），因为只是传内存地址，可以用指针传递体积大的结构体，如果传递值，在每次创建副本上面就会花费相对较多的系统开销（内存和时间）。所以当要传递打的结构体的时候，用指针是一个明智的选择。一般来说，传递指针（一个32或者64位的值）的消耗傻逼传递副本占用更少资源。在函数调用是，像切片（slice）、字典（map）、接口（interface）、通道（channel）这样的引用类型都是默认引用传递（即使没有显示的支出指针）</li>
+<li>传递指针给函数不但可以节省内存（因为没有赋值变量的值），而且赋予了函数直接修改外部变量的能力，所以被修改的变量不需要再用return返回<br>关于第三点，下面的例子中res是一个只想int变量的指针，通过这个指针，在函数内修改了这个int变量的值<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">	m := 2</span><br><span class="line">	res := &amp;m</span><br><span class="line">	multi(5, 6, res)</span><br><span class="line">	fmt.Println(&quot;res is &quot;, *res)</span><br><span class="line">	fmt.Println(&quot;m is &quot;, m)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func multi(a, b int, res *int) &#123;</span><br><span class="line">	*res = a * b</span><br><span class="line">&#125;</span><br><span class="line">res is  30</span><br><span class="line">m is  30 // 因为指针指向的值发生了修改，所以原先的值也发生了修改</span><br></pre></td></tr></table></figure>
+实际开发中传递一个指针容易发生一些不确定的事，所以需要万分小心可以改变外部变量的函数，迫不得已使用时需要添加注意以便能清楚函数的具体作用<br>即使如此，传递指针的又是还是十分明显的，当需要在函数内改变一个占用内存比较大的变量时，传递指针可以极大减少内存，性能优势十分出色。但也是一把双刃剑</li>
+</ul>
+<h6 id="defer与跟踪"><a href="#defer与跟踪" class="headerlink" title="defer与跟踪"></a>defer与跟踪</h6><p>go语言中让人颇为沉到的一个设计就是延迟（defer）语句，开发者可以在函数中添加多个defer语句，当函数执行到最后时（return语句执行之前），这些defer语句会按照“逆序”执行，最后函数才退出。<br>在进行一些IO操作时，如果需要提前返回，而返回之前需要关闭相应的资源，否则容易造成资源泄露等问题，defer语句就可以优秀的解决这个问题，比如以下这个打开文件的例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">func ReadFile() bool &#123;</span><br><span class="line">	file.open(&quot;file&quot;)</span><br><span class="line">	// 一些操作</span><br><span class="line">	if openFail &#123;</span><br><span class="line">		file.Close()</span><br><span class="line">		return false</span><br><span class="line">	&#125; else if readFail &#123;</span><br><span class="line">		file.Close()</span><br><span class="line">		return false</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	// 读写正常</span><br><span class="line">	file.Close()</span><br><span class="line">	return true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的例子中有很多重复的代码，而使用go语言的defer语句可以解决这个问题，以下是go语言的写法，不仅使得代码量减少很多，程序也变得更加优雅</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">func ReadFile() bool &#123;</span><br><span class="line">	file.open(&quot;file&quot;)</span><br><span class="line">	defer file.Close() // 打开和关闭写在一起方便管理，也不容易遗忘</span><br><span class="line">	if openFail &#123;</span><br><span class="line">		return false</span><br><span class="line">	&#125; else if readFail &#123;</span><br><span class="line">		return false</span><br><span class="line">	&#125;</span><br><span class="line">	return true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在defer后指定的函数会在函数退出前调用，如果多次使用defer，那么defer会采用后进先出顺序依次执行</p>
+<p>关于defer、return、和返回值之间的执行顺序，很多人都容易搞混，下面几个例子可以简单说明。<br>首先需要特别注意函数的返回值是否被命名，以下是返回值无命名的情况：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">	fmt.Println(&quot;return&quot;, a()) // return 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func a() int &#123;</span><br><span class="line">	var i int</span><br><span class="line">	defer func() &#123;</span><br><span class="line">		i++</span><br><span class="line">		fmt.Println(&quot;defer 1 is &quot;, i) // defer 1 is  2</span><br><span class="line">	&#125;()</span><br><span class="line">	defer func() &#123;</span><br><span class="line">		i++</span><br><span class="line">		fmt.Println(&quot;defer 2 is &quot;, i) // defet 2 is  1</span><br><span class="line">	&#125;()</span><br><span class="line">	return i</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以下是返回值有命名的情况：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">	fmt.Println(&quot;return&quot;, a()) // return 2</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func a() int &#123;</span><br><span class="line">	var i int</span><br><span class="line">	defer func() &#123;</span><br><span class="line">		i++</span><br><span class="line">		fmt.Println(&quot;defer 1 is &quot;, i) // defer 1 is  2</span><br><span class="line">	&#125;()</span><br><span class="line">	defer func() &#123;</span><br><span class="line">		i++</span><br><span class="line">		fmt.Println(&quot;defer 2 is &quot;, i) // defet 2 is  1</span><br><span class="line">	&#125;()</span><br><span class="line">	return i</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先我们知道，多个defer执行的顺序为逆序，defer、return、返回值三者的执行逻辑应该是：defer先执行；然后return执行，return负责将结果写入返回值中；最后函数携带当前返回值退出。<br>上面两段代码返回结果之所以不同，是因为a()int{}的返回值没有被命名，而且需要特别注意的是，尽管两个defer语句的匿名函数也没有返回值，但是匿名函数的特点是可以集成变量的值，所以defer2语句继承了defer1的值。按理说a()的返回值是2才对，但是返回0，这里是因为返回值没有被声明，所以函数a()的返回值还是0，然后b()(i int){}的返回值已经声明为i，也就意味着defer中是可以调用到真实返回值的，因此defer在return赋值返回值i之后，再一次修改了i的值，最终函数退出后的返回值才会是defer修改过的值。</p>
+<p>defer原理<br>defer的实现逻辑简单来说就是：</p>
+<ul>
+<li>先给返回值赋值（若为有名返回值直接赋值，若为匿名返回值则先声明再赋值）</li>
+<li>执行defer语句</li>
+<li>return 携带返回值退出函数<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">func f1() int &#123; //匿名返回值</span><br><span class="line">	var r int = 6</span><br><span class="line">	defer func() &#123;</span><br><span class="line">		r *= 7</span><br><span class="line">	&#125;()</span><br><span class="line">	return r</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func f2() (r int) &#123; //有名返回值</span><br><span class="line">	defer func() &#123;</span><br><span class="line">		r *= 7</span><br><span class="line">	&#125;()</span><br><span class="line">	return 6</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func f3() (r int) &#123; //有名返回值</span><br><span class="line">	defer func(r int) &#123;</span><br><span class="line">		r *= 7</span><br><span class="line">	&#125;(r)</span><br><span class="line">	return 6</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+f1的结果是6。f1是匿名返回值，匿名返回值是在return执行时被声明，因此defer声明时，还不能访问到匿名返回值，defer的修改不会影响到返回值。<br>f2先给返回值r赋值，r&#x3D;6，执行defer语句，defer修改r, r &#x3D; 42，然后函数return。<br>f3是有名返回值，但是因为r是作为defer的传参，在声明defer的时候，就进行参数拷贝传递，所以defer只会对defer函数的局部参数有影响，不会影响到调用函数的返回值。</li>
+</ul>
+<h6 id="跟踪"><a href="#跟踪" class="headerlink" title="跟踪"></a>跟踪</h6><p>defer 经常用于代码追踪执行，具体在进入和离开某个函数时打印相关的消息，比如下例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">func a() &#123;</span><br><span class="line">	defer un(trace(&quot;a&quot;)) // 初始化defer函数的参数，所以输出trace()的结果</span><br><span class="line">	fmt.Println(&quot;执行a&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func b() &#123;</span><br><span class="line">	defer un(trace(&quot;b&quot;))</span><br><span class="line">	fmt.Println(&quot;执行b&quot;)</span><br><span class="line">	a()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func trace(s string) string &#123;</span><br><span class="line">	fmt.Println(&quot;processing &quot;, s)</span><br><span class="line">	return s</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func un(s string) &#123;</span><br><span class="line">	fmt.Println(&quot;endind &quot;, s)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*processing  b</span><br><span class="line">执行b</span><br><span class="line">processing  a</span><br><span class="line">执行a</span><br><span class="line">endind  a</span><br><span class="line">endind  b*/</span><br></pre></td></tr></table></figure>
+<p>也可以使用defer语句来记录函数的参数与返回值。比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">defer func() &#123;</span><br><span class="line">	log.Printf(&quot;func1(%q) = %d, %v&quot;, s ,n, err)</span><br><span class="line">&#125;()</span><br></pre></td></tr></table></figure>
+<p>使用这种方法可以获取函数调用时的输入和输出值。使用延迟语句还可以修改return语句的返回值，比如修改return的错误信息。</p>
+<h5 id="错误与恢复"><a href="#错误与恢复" class="headerlink" title="错误与恢复"></a>错误与恢复</h5><p>go语言提供了panic和recover来支持异常机制，但是，panic应当作为最后的手段来使用，代码中应该没有或者少有panic语句，下面是panic()和recover()函数的声明格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">func panic(interface&#123;&#125;)</span><br><span class="line">func recover(interface&#123;&#125;)</span><br></pre></td></tr></table></figure>
+<p>在了解panic的机制之前，先了解一下go语言是怎样处理程序错误的。</p>
+<p>error</p>
+<p>go语言的error是一个接口，定义极其简单，只有一个error()</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type error interface &#123;</span><br><span class="line">    Error() string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于大部分函数来说，返回错误基本都可以定义为以下模式，即将error作为多返回值的最后一个返回，并非强制要求。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func Foo(param int) (n int, err error) &#123;</span><br><span class="line">    //  ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里使用go语言标准库中的实际代码来演示如何使用自定义的error类型。首先需要定义一个类型，用于承载错误信息，不过因为go语言中接口十分灵活，所以不需要从error接口集成或者想Java一样使用implements来明确指定类型和接口之间的关系，所以具体代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">type PathError struct &#123;</span><br><span class="line">    Op string</span><br><span class="line">    Path string</span><br><span class="line">    Err error</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在为了让编译器知道PathError可以当一个error来传递，还需要关键一步，下面的代码实现了具体的Error()方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func (e *PathError) Error() string  &#123;</span><br><span class="line">	return e.Op + &quot; &quot; + e.path + &quot;: &quot; + e.Err.Error()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>关于接口的更多细节，这里不做更多讲解。现在可以直接返回PathError变量，比如下面的示例代码中，当syscall.Stat()失败返回err时，将该err包装到一个PathError对象中返回：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">func Stat(name string) (fi FileInfo, err error) &#123;</span><br><span class="line">	var stat syscall.Stat_t</span><br><span class="line">	err = syscall.Stat(name, &amp;stat)</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		return nil, &amp;PathError&#123;&quot;stat&quot;, name, err&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return fileInfoFormStat(&amp;stat, name), nil</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不过，很多时候在处理错误时，需要获得详细错误信息，这时候需要用到类型转换了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fi, err := os.Stat(&quot;a.txt&quot;)</span><br><span class="line">if err != nil &#123;</span><br><span class="line">	if e, ok := err.(*os.PathError); ok &amp;&amp; e.Err != nil &#123;</span><br><span class="line">		// 获取PathError类型变量中e的其他信息并处理</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="panic"><a href="#panic" class="headerlink" title="panic"></a>panic</h6><p>panic 是一个内建函数，可以中断原有的控制流程。比如当函数Func1调用panic时，函数的执行就会被中断，但是Func1的defer函数会正常执行，然后Func1会返回到调用它的地方，panic继续蔓延，向外围扩散，直到panic的goroutine中所调用的函数返回。错误信息将会被上报，包括在调用panic()函数时传入的参数，这个过程称为错误处理流程<br>恐慌可以直接调用panic产生，也可以运行时错误产生，例如访问越界的数据，从上面的声明格式来看（参数是一个空接口），panic()函数接收任意类型的数据，比如整形、字符串、对象等。调用方式很简单：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">panic(404)</span><br><span class="line">panic(&quot;network error&quot;)</span><br><span class="line">panic(Error(&quot;file not exists&quot;))</span><br></pre></td></tr></table></figure>
+<p>在使用过程中，我们可以使用panic()抛出错误，但是产生的错误并不会影响defer的执行。<br>区别使用 panic 和 error 两种方式，导致关键流程出现不可修复性错误的情况使用panic，其他时间使用error</p>
+<h6 id="recover"><a href="#recover" class="headerlink" title="recover"></a>recover</h6><p>recover是一个内建的函数，可以让进入panic的流程中的goroutine恢复过来，如果当前的goroutine陷入panic，调用recover可以捕获到panic的输入值，并且恢复过来执行。<br>由于recover() 函数用于错误处理流程，所以一般情况下，recover()仅在defer语句中的“函数”中有效，以有效截取错误处理流程，recover()只有在defer的“函数”内直接调用才会终止错误，否则总是返回nil。如果在没有发生异常的goroutine中明确调用recover()函数，会导致该goroutine所属的进程打印异常信息后直接退出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">func test() &#123;</span><br><span class="line">	defer func() &#123; // 有效，在defer语句的匿名函数中调用</span><br><span class="line">		fmt.Println(recover())</span><br><span class="line">	&#125;()</span><br><span class="line"></span><br><span class="line">	defer func() &#123; // 无效，间接调用recover，返回nil</span><br><span class="line">		func() &#123;</span><br><span class="line">			recover()</span><br><span class="line">		&#125;()</span><br><span class="line">	&#125;()</span><br><span class="line"></span><br><span class="line">	defer fmt.Println(recover()) // 无效，recover相当于直接调用然后被外部函数打印，返回nil</span><br><span class="line">	defer recover()              // 无效，相当于直接调用recover，返回nil</span><br><span class="line">	panic(&quot;error&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以下是一个常见的例子，假设对于foo()函数的执行结果不确定，感觉可能会报错，或者自己在其中明确了按特定条件触发错误处理的语句，那么可以用如下党发在调用代码中截取recover()：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">func test() &#123;</span><br><span class="line">	defer func() &#123;</span><br><span class="line">		if r := recover(); r != nil &#123;</span><br><span class="line">			log.Printf(&quot;异常： %v&quot;, r)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;()</span><br><span class="line"></span><br><span class="line">	defer func() &#123;</span><br><span class="line">		panic(&quot;第二个错误&quot;)</span><br><span class="line">	&#125;()</span><br><span class="line"></span><br><span class="line">	panic(&quot;第一个错误&quot;)</span><br><span class="line"></span><br><span class="line">	//2022/04/19 11:50:26 异常： 第二个错误</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>无论foo()中是否触发了错误处理流程，该匿名defer函数都将在函数退出时执行。假如foo()触发了错误处理流程，执行recover()函数将使得该错误处理过程终止。如果错误处理流程触发，程序传给panic的参数不为nil，则该函数还会打印详细的错误信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">	throwsPanic(genErr)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func genErr() &#123;</span><br><span class="line">	fmt.Println(time.Now(), &quot;normal sentence&quot;)</span><br><span class="line">	defer func() &#123;</span><br><span class="line">		fmt.Println(time.Now(), &quot;defer normal sentence&quot;)</span><br><span class="line">		panic(&quot;second error&quot;)</span><br><span class="line">	&#125;()</span><br><span class="line">	panic(&quot;first error&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func throwsPanic(f func()) (b bool) &#123;</span><br><span class="line">	defer func() &#123;</span><br><span class="line">		if r := recover(); r != nil &#123;</span><br><span class="line">			fmt.Println(time.Now(), &quot;error is: &quot;, r)</span><br><span class="line">			b = true</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;()</span><br><span class="line">	f()</span><br><span class="line">	return</span><br><span class="line"></span><br><span class="line">	//2022-04-19 11:59:47 normal sentence</span><br><span class="line">	//2022-04-19 11:59:47 defer normal sentence</span><br><span class="line">	//2022-04-19 11:59:47 error is: second error</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意到，虽然第一个panic已经执行，但是在recover()函数中看不到错误捕获的时间，这是因为recover()只会捕捉最后一个错误，而且捕获的时机是在函数最后面，不影响第一个panic之后的defer语句的执行。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/31/golang%E5%87%BD%E6%95%B0%E7%9A%84%E5%89%AF%E6%9C%AC/" data-id="cl4v3jgaa0000acs65yqm2nah" data-title="golang函数" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GOLANG/" rel="tag">GOLANG</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2022/05/31/golang%E5%8C%85%E7%9A%84%E5%89%AF%E6%9C%AC/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">golang包</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/GOLANG/">GOLANG</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/GOLANG/" rel="tag">GOLANG</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/GOLANG/" style="font-size: 10px;">GOLANG</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/05/31/golang%E5%87%BD%E6%95%B0%E7%9A%84%E5%89%AF%E6%9C%AC/">golang函数</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/31/golang%E5%8C%85%E7%9A%84%E5%89%AF%E6%9C%AC/">golang包</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/31/golang%E5%9F%BA%E7%A1%80%E7%9A%84%E5%89%AF%E6%9C%AC/">golang运算基础</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/31/golang%E5%A4%8D%E5%90%88%E6%95%B0%E6%8D%AE%E7%9A%84%E5%89%AF%E6%9C%AC/">golang复合数据</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/31/golang%E5%B9%B6%E5%8F%91%E7%9A%84%E5%89%AF%E6%9C%AC/">golang并发</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
