@@ -19,7 +19,7 @@
     <meta name="description" content="接口接口在GO语言中有着至关重要的地位，如果说goroutine和channel是支撑GO语言的并发模型的基石，让GO语言在如此集群化和多核化的时代称为一道极为靓丽的风景，那么接口就是整个类型系统的基石，让GO语言语言在基础编程哲学的探索上各个过达到前所未有的高度。 什么是接口接口是一种类型，一种抽象的类型。 GO语言是“非传统”的面向对象编程语言，它没有类和继承的概念，但是GO语言有灵活的接口概">
 <meta property="og:type" content="article">
 <meta property="og:title" content="golang接口与反射">
-<meta property="og:url" content="http://example.com/2022/05/31/golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%8F%8D%E5%B0%84%E7%9A%84%E5%89%AF%E6%9C%AC/index.html">
+<meta property="og:url" content="https://usergao.github.io/2022/05/31/golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%8F%8D%E5%B0%84%E7%9A%84%E5%89%AF%E6%9C%AC/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="接口接口在GO语言中有着至关重要的地位，如果说goroutine和channel是支撑GO语言的并发模型的基石，让GO语言在如此集群化和多核化的时代称为一道极为靓丽的风景，那么接口就是整个类型系统的基石，让GO语言语言在基础编程哲学的探索上各个过达到前所未有的高度。 什么是接口接口是一种类型，一种抽象的类型。 GO语言是“非传统”的面向对象编程语言，它没有类和继承的概念，但是GO语言有灵活的接口概">
 <meta property="og:locale" content="zh_CN">
@@ -69,7 +69,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"usergao.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -95,7 +95,7 @@
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <strong>Fluid</strong>
+      <strong>GM的博客</strong>
     </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
@@ -455,7 +455,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>golang接口与反射</div>
-      <div>http://example.com/2022/05/31/golang接口与反射的副本/</div>
+      <div>https://usergao.github.io/2022/05/31/golang接口与反射的副本/</div>
     </div>
     <div class="license-meta">
       
@@ -497,9 +497,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/05/31/golang%E5%A4%8D%E5%90%88%E6%95%B0%E6%8D%AE%E7%9A%84%E5%89%AF%E6%9C%AC/" title="golang复合数据">
+                      <a href="/2022/05/31/golang%E5%B9%B6%E5%8F%91%E7%9A%84%E5%89%AF%E6%9C%AC/" title="golang并发">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">golang复合数据</span>
+                        <span class="hidden-mobile">golang并发</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -519,6 +519,12 @@
             </div>
 
             
+  <article id="comments" lazyload>
+    
+
+  </article>
+
+
           </article>
         </div>
       </div>
@@ -608,7 +614,8 @@
     <div class="footer-inner">
   
     <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+       <a href="" target="_blank" rel="nofollow noopener"><span></span></a>
+
     </div>
   
   
