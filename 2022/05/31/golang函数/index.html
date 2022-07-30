@@ -19,12 +19,12 @@
     <meta name="description" content="函数我们已经认识了main()函数，是程序的入口，因为go 是编译型语言，所以函数编写的顺序无关紧要，但是为了可读性，一般把main（）函数卸载文件前面，但是其他函数需要按照一定的逻辑顺序编写。 认识函数在golang中，函数和其他语言的方法不一样，有明显的区分，函数是指不属于任何结构体、类型的方法，也就是说，函数是没有接受者的，而方法是有接受者的，方法要么属于一个结构体，要么数以一个新定义的类型">
 <meta property="og:type" content="article">
 <meta property="og:title" content="golang函数">
-<meta property="og:url" content="https://usergao.github.io/2022/05/31/golang%E5%87%BD%E6%95%B0%E7%9A%84%E5%89%AF%E6%9C%AC/index.html">
+<meta property="og:url" content="https://usergao.github.io/2022/05/31/golang%E5%87%BD%E6%95%B0/index.html">
 <meta property="og:site_name" content="GM的博客">
 <meta property="og:description" content="函数我们已经认识了main()函数，是程序的入口，因为go 是编译型语言，所以函数编写的顺序无关紧要，但是为了可读性，一般把main（）函数卸载文件前面，但是其他函数需要按照一定的逻辑顺序编写。 认识函数在golang中，函数和其他语言的方法不一样，有明显的区分，函数是指不属于任何结构体、类型的方法，也就是说，函数是没有接受者的，而方法是有接受者的，方法要么属于一个结构体，要么数以一个新定义的类型">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-05-31T06:23:00.000Z">
-<meta property="article:modified_time" content="2022-06-20T20:04:10.673Z">
+<meta property="article:modified_time" content="2022-07-30T19:57:54.980Z">
 <meta property="article:author" content="GM">
 <meta property="article:tag" content="GOLANG">
 <meta name="twitter:card" content="summary_large_image">
@@ -363,7 +363,7 @@
 <p>关于defer、return、和返回值之间的执行顺序，很多人都容易搞混，下面几个例子可以简单说明。<br>首先需要特别注意函数的返回值是否被命名，以下是返回值无命名的情况：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;return&quot;</span>, a()) <span class="hljs-comment">// return 0</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">a</span><span class="hljs-params">()</span></span> <span class="hljs-type">int</span> &#123;<br>	<span class="hljs-keyword">var</span> i <span class="hljs-type">int</span><br>	<span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>		i++<br>		fmt.Println(<span class="hljs-string">&quot;defer 1 is &quot;</span>, i) <span class="hljs-comment">// defer 1 is  2</span><br>	&#125;()<br>	<span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>		i++<br>		fmt.Println(<span class="hljs-string">&quot;defer 2 is &quot;</span>, i) <span class="hljs-comment">// defet 2 is  1</span><br>	&#125;()<br>	<span class="hljs-keyword">return</span> i<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>以下是返回值有命名的情况：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;return&quot;</span>, a()) <span class="hljs-comment">// return 2</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">a</span><span class="hljs-params">()</span></span> <span class="hljs-type">int</span> &#123;<br>	<span class="hljs-keyword">var</span> i <span class="hljs-type">int</span><br>	<span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>		i++<br>		fmt.Println(<span class="hljs-string">&quot;defer 1 is &quot;</span>, i) <span class="hljs-comment">// defer 1 is  2</span><br>	&#125;()<br>	<span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>		i++<br>		fmt.Println(<span class="hljs-string">&quot;defer 2 is &quot;</span>, i) <span class="hljs-comment">// defet 2 is  1</span><br>	&#125;()<br>	<span class="hljs-keyword">return</span> i<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;return&quot;</span>, a()) <span class="hljs-comment">// return 2</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">a</span><span class="hljs-params">()</span></span> (i <span class="hljs-type">int</span>) &#123;<br>	<span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>		i++<br>		fmt.Println(<span class="hljs-string">&quot;defer 1 is &quot;</span>, i) <span class="hljs-comment">// defer 1 is  2</span><br>	&#125;()<br><br>	<span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>		i++<br>		fmt.Println(<span class="hljs-string">&quot;defer 2 is &quot;</span>, i) <span class="hljs-comment">// defer 2 is  1</span><br>	&#125;()<br>	<span class="hljs-keyword">return</span> i<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>首先我们知道，多个defer执行的顺序为逆序，defer、return、返回值三者的执行逻辑应该是：defer先执行；然后return执行，return负责将结果写入返回值中；最后函数携带当前返回值退出。<br>上面两段代码返回结果之所以不同，是因为a()int{}的返回值没有被命名，而且需要特别注意的是，尽管两个defer语句的匿名函数也没有返回值，但是匿名函数的特点是可以集成变量的值，所以defer2语句继承了defer1的值。按理说a()的返回值是2才对，但是返回0，这里是因为返回值没有被声明，所以函数a()的返回值还是0，然后b()(i int){}的返回值已经声明为i，也就意味着defer中是可以调用到真实返回值的，因此defer在return赋值返回值i之后，再一次修改了i的值，最终函数退出后的返回值才会是defer修改过的值。</p>
 <p>defer原理<br>defer的实现逻辑简单来说就是：</p>
 <ul>
@@ -450,7 +450,7 @@ f1的结果是6。f1是匿名返回值，匿名返回值是在return执行时被
   <div class="license-box my-3">
     <div class="license-title">
       <div>golang函数</div>
-      <div>https://usergao.github.io/2022/05/31/golang函数的副本/</div>
+      <div>https://usergao.github.io/2022/05/31/golang函数/</div>
     </div>
     <div class="license-meta">
       
@@ -496,7 +496,7 @@ f1的结果是6。f1是匿名返回值，匿名返回值是在return执行时被
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/05/31/golang%E5%8C%85%E7%9A%84%E5%89%AF%E6%9C%AC/" title="golang包">
+                      <a href="/2022/05/31/golang%E5%8C%85/" title="golang包">
                         <span class="hidden-mobile">golang包</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
