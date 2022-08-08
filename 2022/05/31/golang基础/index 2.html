@@ -16,15 +16,15 @@
   <meta name="author" content="GM">
   <meta name="keywords" content="">
   
-    <meta name="description" content="并发编程在学习GO语言的并发之前，先让我们理解一下并发中的相关概念  进程、线程和协程  进程(process)&amp;emsp;&amp;emsp; 程序在操作系统中的一次执行过程，系统进行资源分配和调度的一个独立单位。当一个应用程序被启动时，操作系统会为这个应用程序启动一个进程，可以将这个进程看做包含了应用程序在运行时需要用到和维护的各种资源额容器。这些资源包括但不限于内存空间地址、文件、设">
+    <meta name="description" content="一元运算符&amp;:取地址运算符，表示取一个变量的内存地址，同时也属于一元操作符(也叫单目运算符)。 * :取值运算符，表示取一个变量所指向内存地址中保存的数据，它同时也属于一元操作符(也叫单目运算符)。 如何区分”&amp;”, “*”到底是逻辑运算符（乘法算术符）还是取地址运算符（取值运算符）？如果需要两个变量来进行操作，则是逻辑运算符，比如 a &amp; b 和 a * b，同时需要两个">
 <meta property="og:type" content="article">
-<meta property="og:title" content="并发基础">
-<meta property="og:url" content="https://usergao.github.io/2022/05/31/%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:title" content="golang运算基础">
+<meta property="og:url" content="https://usergao.github.io/2022/05/31/golang%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="GM的博客">
-<meta property="og:description" content="并发编程在学习GO语言的并发之前，先让我们理解一下并发中的相关概念  进程、线程和协程  进程(process)&amp;emsp;&amp;emsp; 程序在操作系统中的一次执行过程，系统进行资源分配和调度的一个独立单位。当一个应用程序被启动时，操作系统会为这个应用程序启动一个进程，可以将这个进程看做包含了应用程序在运行时需要用到和维护的各种资源额容器。这些资源包括但不限于内存空间地址、文件、设">
+<meta property="og:description" content="一元运算符&amp;:取地址运算符，表示取一个变量的内存地址，同时也属于一元操作符(也叫单目运算符)。 * :取值运算符，表示取一个变量所指向内存地址中保存的数据，它同时也属于一元操作符(也叫单目运算符)。 如何区分”&amp;”, “*”到底是逻辑运算符（乘法算术符）还是取地址运算符（取值运算符）？如果需要两个变量来进行操作，则是逻辑运算符，比如 a &amp; b 和 a * b，同时需要两个">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-05-31T06:23:00.000Z">
-<meta property="article:modified_time" content="2022-08-08T15:26:58.303Z">
+<meta property="article:modified_time" content="2022-08-08T15:05:04.903Z">
 <meta property="article:author" content="GM">
 <meta property="article:tag" content="GOLANG">
 <meta name="twitter:card" content="summary_large_image">
@@ -33,7 +33,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>并发基础 - GM的博客</title>
+  <title>golang运算基础 - GM的博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +198,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="并发基础"></span>
+            <span id="subtitle" data-typed-text="golang运算基础"></span>
           
         </div>
 
@@ -221,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          508 字
+          837 字
         
       </span>
     
@@ -232,7 +232,7 @@
         
         
         
-          5 分钟
+          7 分钟
         
       </span>
     
@@ -278,20 +278,36 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">并发基础</h1>
+            <h1 style="display: none">golang运算基础</h1>
             
             
               <div class="markdown-body">
                 
-                <h3 id="并发编程"><a href="#并发编程" class="headerlink" title="并发编程"></a>并发编程</h3><p>在学习GO语言的并发之前，先让我们理解一下并发中的相关概念</p>
-<blockquote>
-<p>进程、线程和协程</p>
-</blockquote>
-<p>进程(process)<br>&amp;emsp;&amp;emsp; 程序在操作系统中的一次执行过程，系统进行资源分配和调度的一个独立单位。当一个应用程序被启动时，操作系统会为这个应用程序启动一个进程，可以将这个进程看做包含了应用程序在运行时需要用到和维护的各种资源额容器。这些资源包括但不限于内存空间地址、文件、设备的句柄以及线程。一个进程至少是一个执行空间，每个进程的初始线程称为主线程。又因为执行这个线程的空间是应用程序本身的空间，所以当主线程终止时，应用程序也会终止。<br>线程(thred)<br>&amp;emsp;&amp;emsp; 操作系统基于进程开启的轻量级进程，是操作系统调度执行的最小单位。<br>协程（coroutine）<br>&amp;emsp;&amp;emsp; 非操作系统提供而是由用户自行创建和控制的用户态“线程”，比线程更轻量级。</p>
-<blockquote>
-<p>串行、并发与并行</p>
-</blockquote>
-<p>串行：我们都是先读小学，然后初中，然后高中最后到大学，一切按顺序执行。<br>并发：同一时间内执行多个任务（我同时和爸妈两个人微信聊天）<br>并行：同一时刻执行多个任务（我和我弟弟同时都在和爸妈微信聊天）</p>
+                <h2 id="一元运算符"><a href="#一元运算符" class="headerlink" title="一元运算符"></a>一元运算符</h2><p>&amp;:<br>取地址运算符，表示取一个变量的内存地址，同时也属于一元操作符(也叫单目运算符)。</p>
+<p>* :<br>取值运算符，表示取一个变量所指向内存地址中保存的数据，它同时也属于一元操作符(也叫单目运算符)。</p>
+<h3 id="如何区分”-amp-”-“-”到底是逻辑运算符（乘法算术符）还是取地址运算符（取值运算符）？"><a href="#如何区分”-amp-”-“-”到底是逻辑运算符（乘法算术符）还是取地址运算符（取值运算符）？" class="headerlink" title="如何区分”&amp;”, “*”到底是逻辑运算符（乘法算术符）还是取地址运算符（取值运算符）？"></a>如何区分”&amp;”, “*”到底是逻辑运算符（乘法算术符）还是取地址运算符（取值运算符）？</h3><p>如果需要两个变量来进行操作，则是逻辑运算符，比如 a &amp; b 和 a * b，同时需要两个变量，称之为二元运算符，而取地址（取值）运算符只需要一个变量既可，比如 &amp;a 和 *b ，称之为一元运算符。</p>
+<h2 id="进制"><a href="#进制" class="headerlink" title="进制"></a>进制</h2><ul>
+<li>前缀是0x或0X为十六进制</li>
+<li>前缀为0的为8进制</li>
+<li>十进制无前缀</li>
+</ul>
+<p>整数可以有一个后缀，是u和l的组合，分别代表 unsigned 和 long ，后缀可以是大小写字母，顺序也随意。</p>
+<h2 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h2><p>&amp;：</p>
+<p>按位与操作，将两个值转化为二进制后进行对比，两位均为1时为1，位数不够时用0从左补充，再将获得的二进制值转化为十进制。</p>
+<p>|：</p>
+<p>按位或操作，将两个值转化为二进制后进行对比，两位有1位为1时为1，位数不够时用0从左补充，再将获得的二进制值转化为十进制。</p>
+<p>^：</p>
+<p>按位异或操作，将两个值转化为二进制后进行对比，两位不一样时为1，其它都为0，位数不够时用0从左补充，再将获得的二进制值转化为十进制。</p>
+<p>&lt;&lt;：</p>
+<p>按位左移操作，左移n位等于乘以2的n次方。</p>
+<p>&gt;&gt;：</p>
+<p>按位右移操作，右移n位等于除以2的n次方。</p>
+<p>&amp;^：</p>
+<p>按位清除操作，比如5&amp;^11，指5转化为二进制时为0101，11为1011。将5的二进制值中为1的值设置为0，剩余位与11的二进制值相应位相同，则得到0100，十进制为4。</p>
+<p>^x：</p>
+<p>取反操作，公式可以为-（x+1），适用于正负数和零。</p>
+<h2 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h2><p>每个 const 定义的默认为0，除非显式设置为其他值，后续常量默认值为上一个常量值。如果常量值为 iota ，则都被设置为 iota，iota 有递增效果，所以可以实现枚举。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">const</span> (<br>	a = <span class="hljs-literal">iota</span><br>	b<br>	c<br>	d, e, f = <span class="hljs-literal">iota</span>, <span class="hljs-literal">iota</span>, <span class="hljs-literal">iota</span><br>)<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -337,8 +353,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>并发基础</div>
-      <div>https://usergao.github.io/2022/05/31/并发基础/</div>
+      <div>golang运算基础</div>
+      <div>https://usergao.github.io/2022/05/31/golang基础/</div>
     </div>
     <div class="license-meta">
       
@@ -380,15 +396,21 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/05/31/golang%E7%9A%84goroutine/" title="golang并发">
+                      <a href="/2022/05/31/golang%E5%87%BD%E6%95%B0/" title="golang函数">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">golang并发</span>
+                        <span class="hidden-mobile">golang函数</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2022/05/31/golang%E5%8C%85/" title="golang包">
+                        <span class="hidden-mobile">golang包</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
