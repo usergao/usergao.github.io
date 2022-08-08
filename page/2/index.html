@@ -227,15 +227,15 @@
         
           <i class="index-pin " title="Pin on top"></i>
         
-        <a href="/2022/05/31/golang%E7%BB%93%E6%9E%84%E4%BD%93/" target="_self">
-          golang结构体
+        <a href="/2022/05/31/golang%E7%9A%84goroutine/" target="_self">
+          golang并发
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/05/31/golang%E7%BB%93%E6%9E%84%E4%BD%93/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/05/31/golang%E7%9A%84goroutine/" target="_self">
         <div>
-          结构体前面已经多次使用过自定义类型，这种自定义类型正是通过GO语言类型别名（alias-types）和结构体的形式支撑的。结构体也是复合类型，通常是用一个带属性的结构体来表示一个现实中的实体。一个自定义类型由一系列属性组成，每个属性都有自己的类型和值。结构体的目的就是把数据聚集在一起，以便能够更加便捷快捷的操作这些数据，在外部来看就像一个实体。结构体依旧是值类型，可以通过new函数来创建。 结构体
+          指定使用核心数Go运行时的调度器使用GOMAXPROCS参数来确定需要使用多少个 OS 线程来同时执行 Go 代码。默认值是机器上的 CPU 核心数。例如在一个 8 核心的机器上，GOMAXPROCS 默认为 8。Go语言中可以通过runtime.GOMAXPROCS函数设置当前程序并发时占用的 CPU逻辑核心数。（Go1.5版本之前，默认使用的是单核心执行。Go1.5 版本之后，默认使用全部的C
         </div>
       </a>
 
@@ -290,15 +290,15 @@
         
           <i class="index-pin " title="Pin on top"></i>
         
-        <a href="/2022/05/31/%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80/" target="_self">
-          并发基础
+        <a href="/2022/05/31/golang%E7%9A%84channel/" target="_self">
+          golang的channel
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/05/31/%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/05/31/golang%E7%9A%84channel/" target="_self">
         <div>
-          并发编程在学习GO语言的并发之前，先让我们理解一下并发中的相关概念  进程、线程和协程  进程(process)&amp;emsp;&amp;emsp; 程序在操作系统中的一次执行过程，系统进行资源分配和调度的一个独立单位。当一个应用程序被启动时，操作系统会为这个应用程序启动一个进程，可以将这个进程看做包含了应用程序在运行时需要用到和维护的各种资源额容器。这些资源包括但不限于内存空间地址、文件、设
+          channelchannel是Go语言在语言级别提供的goroutine间的通讯方式，可以使用channel在两个或者多个goroutine之间传递消息。channel是进程内的通信方式，因此通过channel传递对象的过程和调用函数时的参数传递行为比较一致。 GO语言采用的并发模型是CSP（Communicating Sequential Processes），提倡通过通信共享内存而不是通过共享
         </div>
       </a>
 
