@@ -16,24 +16,27 @@
   <meta name="author" content="GM">
   <meta name="keywords" content="">
   
-    <meta name="description" content="并发编程在学习GO语言的并发之前，先让我们理解一下并发中的相关概念  进程、线程和协程  进程(process)&amp;emsp;&amp;emsp; 程序在操作系统中的一次执行过程，系统进行资源分配和调度的一个独立单位。当一个应用程序被启动时，操作系统会为这个应用程序启动一个进程，可以将这个进程看做包含了应用程序在运行时需要用到和维护的各种资源额容器。这些资源包括但不限于内存空间地址、文件、设">
+    <meta name="description" content="大家都知道mysql索引推荐建立在where经常查询的字段，并使用最左原则建立，这样才能使用到索引，那么select的字段，对索引的命中是否有影响呢？ 那就来实际测试一下吧。现在有一个student表，表结构为： 1234567CREATE TABLE &#96;student&#96; (  &#96;id&#96; int(11) unsigned NOT NULL AUTO_INCREMENT,  &#96;name&#96; varch">
 <meta property="og:type" content="article">
-<meta property="og:title" content="并发基础">
-<meta property="og:url" content="https://usergao.github.io/2022/05/31/%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:title" content="Mysql查询字段对索引的影响">
+<meta property="og:url" content="https://usergao.github.io/2022/05/31/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/index.html">
 <meta property="og:site_name" content="GM的博客">
-<meta property="og:description" content="并发编程在学习GO语言的并发之前，先让我们理解一下并发中的相关概念  进程、线程和协程  进程(process)&amp;emsp;&amp;emsp; 程序在操作系统中的一次执行过程，系统进行资源分配和调度的一个独立单位。当一个应用程序被启动时，操作系统会为这个应用程序启动一个进程，可以将这个进程看做包含了应用程序在运行时需要用到和维护的各种资源额容器。这些资源包括但不限于内存空间地址、文件、设">
+<meta property="og:description" content="大家都知道mysql索引推荐建立在where经常查询的字段，并使用最左原则建立，这样才能使用到索引，那么select的字段，对索引的命中是否有影响呢？ 那就来实际测试一下吧。现在有一个student表，表结构为： 1234567CREATE TABLE &#96;student&#96; (  &#96;id&#96; int(11) unsigned NOT NULL AUTO_INCREMENT,  &#96;name&#96; varch">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://image.jokernote.com/blog_images/WX20220901-093417%402x.png">
+<meta property="og:image" content="https://image.jokernote.com/blog_images/id_index.png">
 <meta property="article:published_time" content="2022-05-31T06:23:00.000Z">
-<meta property="article:modified_time" content="2022-08-08T15:31:18.133Z">
+<meta property="article:modified_time" content="2022-09-09T06:29:48.738Z">
 <meta property="article:author" content="GM">
-<meta property="article:tag" content="GOLANG">
+<meta property="article:tag" content="Mysql">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://image.jokernote.com/blog_images/WX20220901-093417%402x.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>并发基础 - GM的博客</title>
+  <title>Mysql查询字段对索引的影响 - GM的博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="并发基础"></span>
+            <span id="subtitle" data-typed-text="Mysql查询字段对索引的影响"></span>
           
         </div>
 
@@ -221,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          508 字
+          817 字
         
       </span>
     
@@ -232,7 +235,7 @@
         
         
         
-          5 分钟
+          7 分钟
         
       </span>
     
@@ -278,20 +281,23 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">并发基础</h1>
+            <h1 style="display: none">Mysql查询字段对索引的影响</h1>
             
             
               <div class="markdown-body">
                 
-                <h3 id="并发编程"><a href="#并发编程" class="headerlink" title="并发编程"></a>并发编程</h3><p>在学习GO语言的并发之前，先让我们理解一下并发中的相关概念</p>
-<blockquote>
-<p>进程、线程和协程</p>
-</blockquote>
-<p>进程(process)<br>&amp;emsp;&amp;emsp; 程序在操作系统中的一次执行过程，系统进行资源分配和调度的一个独立单位。当一个应用程序被启动时，操作系统会为这个应用程序启动一个进程，可以将这个进程看做包含了应用程序在运行时需要用到和维护的各种资源额容器。这些资源包括但不限于内存空间地址、文件、设备的句柄以及线程。一个进程至少是一个执行空间，每个进程的初始线程称为主线程。又因为执行这个线程的空间是应用程序本身的空间，所以当主线程终止时，应用程序也会终止。<br>线程(thred)<br>&amp;emsp;&amp;emsp; 操作系统基于进程开启的轻量级进程，是操作系统调度执行的最小单位。<br>协程（coroutine）<br>&amp;emsp;&amp;emsp; 非操作系统提供而是由用户自行创建和控制的用户态“线程”，比线程更轻量级。</p>
-<blockquote>
-<p>串行、并发与并行</p>
-</blockquote>
-<p>串行：我们都是先读小学，然后初中，然后高中最后到大学，一切按顺序执行。<br>并发：同一时间内执行多个任务（我同时和爸妈两个人微信聊天）<br>并行：同一时刻执行多个任务（我和我弟弟同时都在和爸妈微信聊天）</p>
+                <p>大家都知道mysql索引推荐建立在where经常查询的字段，并使用最左原则建立，这样才能使用到索引，那么select的字段，对索引的命中是否有影响呢？</p>
+<p>那就来实际测试一下吧。现在有一个student表，表结构为：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> `student` (<br>  `id` <span class="hljs-type">int</span>(<span class="hljs-number">11</span>) unsigned <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> AUTO_INCREMENT,<br>  `<span class="hljs-type">name</span>` <span class="hljs-type">varchar</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  `age` tinyint(<span class="hljs-number">4</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  `group_id` <span class="hljs-type">int</span>(<span class="hljs-number">11</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  <span class="hljs-keyword">PRIMARY KEY</span> (`id`)<br>) ENGINE=InnoDB AUTO_INCREMENT=<span class="hljs-number">101</span> <span class="hljs-keyword">DEFAULT</span> CHARSET=utf8;<br></code></pre></td></tr></table></figure>
+
+<p>其中表的<code>group_id</code>和<code>age</code>字段为联合索引，此时向表中插入数据：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">create</span> <span class="hljs-keyword">procedure</span> initData<br><br><span class="hljs-keyword">begin</span> <span class="hljs-comment">-- 开始存储过程</span><br><span class="hljs-keyword">declare</span> count <span class="hljs-type">int</span> <span class="hljs-keyword">default</span> <span class="hljs-number">1</span>; <span class="hljs-comment">-- 定义变量</span><br><span class="hljs-keyword">while</span> count &lt;= <span class="hljs-number">100</span> <span class="hljs-keyword">DO</span><br> <span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> student (`<span class="hljs-type">name</span>`,age, group_id) <span class="hljs-keyword">values</span> (concat(<span class="hljs-string">&#x27;学生&#x27;</span>,cast(count <span class="hljs-keyword">as</span> <span class="hljs-type">char</span>(<span class="hljs-number">20</span>))),count,RAND() * <span class="hljs-number">5</span>); <br> <span class="hljs-keyword">set</span> count = count +<span class="hljs-number">1</span>;<br><span class="hljs-keyword">end</span> <span class="hljs-keyword">while</span>;<br><span class="hljs-keyword">end</span><br><br><span class="hljs-keyword">call</span> initData();<br></code></pre></td></tr></table></figure>
+<p>当运行</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">explain</span> <span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> student <span class="hljs-keyword">where</span> group_id = <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+<p>时：<br><img src="https://image.jokernote.com/blog_images/WX20220901-093417%402x.png" srcset="/img/loading.gif" lazyload alt="图片描述"><br>可以看到Mysql是通过回表查询到数据的，而没有通过索引</p>
+<p>此时给表加上索引：</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey">ALTER TABLE `test`.`student` ADD INDEX `group_id_name_age` (`group_id`, `name`, `age`) USING BTREE<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+<p>再次执行相同语句，可以看到语句使用了<code>group_id_age</code>索引<br><img src="https://image.jokernote.com/blog_images/id_index.png" srcset="/img/loading.gif" lazyload alt="图片描述"></p>
 
                 
               </div>
@@ -310,7 +316,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/GOLANG/" class="category-chain-item">GOLANG</a>
+  <a href="/categories/Mysql/" class="category-chain-item">Mysql</a>
   
   
 
@@ -325,7 +331,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/GOLANG/">#GOLANG</a>
+        <a href="/tags/Mysql/">#Mysql</a>
       
     </div>
   
@@ -337,8 +343,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>并发基础</div>
-      <div>https://usergao.github.io/2022/05/31/并发基础/</div>
+      <div>Mysql查询字段对索引的影响</div>
+      <div>https://usergao.github.io/2022/05/31/秒杀系统设计/</div>
     </div>
     <div class="license-meta">
       
@@ -380,7 +386,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/05/31/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" title="Mysql查询字段对索引的影响">
+                      <a href="/2022/05/31/mysql%E9%9A%8F%E6%9C%BA%E5%87%BD%E6%95%B0/" title="Mysql查询字段对索引的影响">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">Mysql查询字段对索引的影响</span>
                         <span class="visible-mobile">上一篇</span>
@@ -390,8 +396,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/05/01/golang%E5%9F%BA%E7%A1%80/" title="golang运算基础">
-                        <span class="hidden-mobile">golang运算基础</span>
+                      <a href="/2022/05/31/%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80/" title="并发基础">
+                        <span class="hidden-mobile">并发基础</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
